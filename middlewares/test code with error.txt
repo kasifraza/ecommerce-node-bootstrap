@@ -1,0 +1,81 @@
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+const Product = mongoose.model('Product');
+const Cart = mongoose.model('Cart');
+
+const isCart = async (req, resp, next) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    if (req.cookies.cart) {
+      req.data = 'cookie';
+      return next();
+    } else {
+      req.session.message = {
+        type: 'warning',
+        message: 'Please Login and Enjoy Shopping'
+      };
+      return resp.redirect('/user/login');
+    }
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.user.id);
+    if (!user) {
+      req.session.message = {
+        type: 'warning',
+        message: 'Please Login and Enjoy Shopping'
+      };
+      return resp.redirect('/user/login');
+    }
+
+    req.session.user = user;
+
+    if (!req.cookies.cart) {
+      req.data = user;
+      return next();
+    }
+
+    const cart = req.cookies.cart;
+    if (!cart.length) {
+      req.data = user;
+      return next();
+    }
+
+    for (const [index, item] of cart.entries()) {
+      const product = await Product.findById(item.productId);
+      if (!product || !product.stock) {
+        cart.splice(index, 1);
+        continue;
+      }
+
+      const alreadyCartItem = await Cart.findOne({ user: user._id, productId: product._id });
+      if (alreadyCartItem) {
+        const newQuantity = alreadyCartItem.quantity + Math.max(item.quantity, 1);
+        await Cart.updateOne({ user: user._id, productId: product._id }, { $set: { quantity: newQuantity } });
+      } else {
+        const cartSave = new Cart({
+          user: user._id,
+          productId: product._id,
+          quantity: Math.max(item.quantity, 1),
+          subTotal: Math.max(item.quantity, 1) * product.price,
+        });
+        await cartSave.save();
+      }
+    }
+
+    resp.cookie('cart');
+    req.data = user;
+    return next();
+  } catch (error) {
+    req.session.message = {
+      type: 'error',
+      message: error.message || 'Internal Server Error'
+    };
+    return resp.redirect('/shop');
+  }
+};
+
+module.exports = isCart;

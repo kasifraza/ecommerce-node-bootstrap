@@ -1,0 +1,192 @@
+const notLoggedin = async(req,resp,next) => {
+    const token = req.cookies.token;
+    if(token){
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.user.id);
+        if(user){
+            if(req.cookies.cart){
+                let cart = req.cookies.cart;
+                if(cart.length > 0){
+                for(let i = 0; i < cart.length; i++){
+                    const product = await Product.findOne({_id:cart[i].productId, status:true});
+                    if(product){
+                    const cartSave = new Cart({
+                        user: user._id,
+                        productId: product._id,
+                        quantity: cart[i].quantity,
+                        subTotal: product.price * cart[i].quantity
+                    });
+                    await cartSave.save();
+                    cart.splice(i,1);
+                    i--;
+                    } else {
+                    cart.splice(i,1);
+                    i--;
+                    }
+                }
+                } else {
+                req.session.message = {
+                    type: 'warning',
+                    message: 'Please add some items to the cart.'
+                };
+                return resp.redirect('/shop');
+                }
+                resp.cookie('cart',cart);
+                return resp.redirect('/');
+            } else {
+            req.session.message = {
+              type: 'warning',
+              message : `Hey ${user.name}, you are already logged in.`
+            };
+            return resp.redirect('/');
+          }
+        } else {
+          return next();
+        }
+      } catch (error) {
+        return next(error);
+      }
+    } else {
+      return next();
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const notLoggedin = async(req,resp,next)=>{
+    const token = req.cookies.token;
+    if(token){
+      const decoded =  jwt.verify(token,process.env.JWT_SECRET);
+      const user = await User.findById(decoded.user.id);
+      if(user){
+        if(req.cookies.cart){
+          const cart = req.cookies.cart;
+          if(cart.length > 0){
+            cart.forEach((item,index) => {
+              const product =  Product.find({_id:item.productId,status:true});
+              if(product){
+                const cartSave = new Cart({
+                  user : user._id,
+                  productId : product._id,
+                  quantity : item.quantity,
+                  subTotal : 1,
+                });
+                 cartSave.save();
+                cart.splice(index,1);
+              }
+              else{
+                cart.splice(index,1);
+              }
+            });
+          }
+          else{
+            req.session.message = {
+              type: 'warning',
+              message: `Please Add Some item to Cart`
+            };
+            resp.redirect('/shop');
+          }
+          resp.cookie('cart',cart);
+          resp.redirect('/');
+        }
+        else{
+          req.session.message = {
+            type: 'warning',
+            message : `Hey ${user.name} You are Already Logged-In`
+          }
+        resp.redirect('/');
+        }
+      }
+      else{
+        next();
+      }
+    }
+    else{
+      next();
+    }
+  };
+
+
+
+
+
+
+
+  const isItemsInCart = async (req, res, next) => {
+    const token = req.cookies.token;
+    if (!token) {
+      req.session.message = {
+        type: 'warning',
+        message: 'Please Login First'
+      };
+      return res.redirect('/user/login');
+    }
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.user.id);
+      if (!user) {
+        req.session.message = {
+          type: 'warning',
+          message: 'Please Login First'
+        };
+        return res.redirect('/user/login');
+      }
+      req.session.user = {
+        id: user._id,
+        name: user.name,
+        email: user.email
+      };
+      if (!req.cookies.cart) {
+        const cartItems = await Cart.find({ user: user._id });
+        if (!cartItems) {
+          req.session.message = {
+            type: 'warning',
+            message: 'Your Cart is Empty'
+          };
+          return res.redirect('/shop');
+        }
+        return next();
+      }
+      let cart = req.cookies.cart;
+      for (let i = 0; i < cart.length; i++) {
+        const product = await Product.findOne({
+          _id: cart[i].productId,
+          status: true
+        });
+        if (!product) {
+          cart.splice(i, 1);
+          i--;
+          continue;
+        }
+        const cartSave = new Cart({
+          user: user._id,
+          productId: product._id,
+          quantity: cart[i].quantity,
+          subTotal: product.price * cart[i].quantity
+        });
+        await cartSave.save();
+        cart.splice(i, 1);
+        i--;
+      }
+      res.cookie('cart', cart);
+      return next();
+    } catch (error) {
+      req.session.message = {
+        type: 'error',
+        message: 'Please Login First'
+      };
+      return next(error);
+    }
+  };

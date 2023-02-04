@@ -1,0 +1,91 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<%- include('../partials/frontend/header.ejs') %>
+
+    <body>
+
+        <div class="main-wrapper">
+            <%- include('../partials/frontend/nav.ejs') %>
+                <%- body %>
+                    <%- include('../partials/frontend/footer.ejs') %>
+                        <!-- demo options start -->
+                        <div class="tm-demo-options-wrapper">
+                            <div class="tm-demo-options-toolbar tooltip-style-2">
+                                <a aria-label="Select Demo" class="view-demo-btn-active" href="#"><i
+                                        class="far fa-ruler-triangle"></i></a>
+                                <a aria-label="Support Channel" target="_blank"
+                                    href="https://hasthemes.com/contact-us/"><i class="far fa-life-ring"></i></a>
+                                <a aria-label="Description" href="#"><i class="far fa-book"></i></a>
+                                <a target="_blank" aria-label="Purchase Medizin"
+                                    href="https://1.envato.market/c/417168/275988/4415?subId1=hastheme&amp;subId2=demo&amp;subId3=https%3A%2F%2Fthemeforest.net%2Fuser%2Fbootxperts%2Fportfolio&amp;u=https%3A%2F%2Fthemeforest.net%2Fuser%2Fbootxperts%2Fportfolio"><i
+                                        class="far fa-shopping-cart"></i></a>
+                            </div>
+                            <div class="tm-demo-panel text-center">
+                                <div class="tm-demo-panel-header">
+                                    <h3> Medizin - Medical eCommerce Template</h3>
+                                    <p> Medizin is our brand new Medical Store eCommerce Template with the specialized
+                                        design for Hospital, Clinics, Medical Suppliers, Medical Stores, Pharmacy
+                                        Stores, Medicine Store, Health Care Centers, Corona Virus Prevention, and
+                                        Clinical Laboratory Equipment eCommerce Websites.</p>
+                                    <div class="tm-demo-btn">
+                                        <a target="_blank"
+                                            href="https://1.envato.market/c/417168/275988/4415?subId1=hastheme&amp;subId2=demo&amp;subId3=https%3A%2F%2Fthemeforest.net%2Fuser%2Fbootxperts%2Fportfolio&amp;u=https%3A%2F%2Fthemeforest.net%2Fuser%2Fbootxperts%2Fportfolio">
+                                            <i class="far fa-shopping-cart"></i> Buy Now </a>
+                                    </div>
+                                </div>
+                                <div class="quick-option-list tooltip-style-4 tooltip-style-4-black">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-6">
+                                            <a aria-label="Medical Supplies" target="_blank" href="index.html"><img
+                                                    src="/images/demo/demo-1.jpg" alt="demo"></a>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-6">
+                                            <a aria-label="Mega Shop" target="_blank" href="index-2.html"><img
+                                                    src="/images/demo/demo-2.jpg" alt="demo"></a>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-6">
+                                            <a aria-label="Medical Equipment" target="_blank" href="index-3.html"><img
+                                                    src="/images/demo/demo-3.jpg" alt="demo"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- search start -->
+                        <div class="search-popup-wrap main-search-active">
+                            <div class="mobile-menu-close close-style-wrap">
+                                <button class="close-style search-close">
+                                    <i class="icon-top"></i>
+                                    <i class="icon-bottom"></i>
+                                </button>
+                            </div>
+                            <div class="search-popup-content">
+                                <form class="search-popup-form" action="#">
+                                    <input type="text" placeholder="Search…">
+                                </form>
+                            </div>
+                        </div>
+        </div>
+        <%- include('../partials/frontend/mobile-nav.ejs') %>
+
+            <%- include('../partials/frontend/js.ejs') %>
+            <% if (typeof message != 'undefined' && message.message) { %>
+                <% if(message.type=='success' ){ %>
+                    <script>
+                        toastr.success('<%= message.message %>');
+                    </script>
+                <% }else if(message.type=='warning' ){ %>
+                    <script>
+                        toastr.warning('<%= message.message %>');
+                    </script>
+                <% }else{ %>
+                    <script>
+                        toastr.error('<%= message.message %>');
+                    </script>
+                <% } %>
+            <% } %>
+    </body>
+
+</html>

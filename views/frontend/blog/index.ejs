@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row mb-4">
+        <% if (blogs && blogs != []) { %>
+            <% blogs.forEach(blog => { %>
+                <div class="col-md-4 mt-4">
+                    <div class="card rounded">
+                        <a href="/blog/<%= blog._id  %> ">
+                            <div class="card-body">
+                                <img src="./uploads/<%= blog.image  %> " class="col-md-12 rounded card-img-top" style="object-fit: fill; filter: brightness(50%); max-height: fit-content;" />
+                                <h5 class="card-title mt-1"><%= blog.title  %> </h5>
+                                <p class="">
+                                    <%- blog.description.substring(0,80) + '...'  %> 
+                                </p>
+                                <p> <%= new Date(blog.created_on).toLocaleDateString('en-US', { year:
+                                    'numeric' , month: 'long' , day: 'numeric' }) %>
+                                </p>
+                            </div> 
+                        </a>
+                    </div>
+                </div>
+            <% }) %>
+        <% }else{ %>
+            <h1> No Blogs Posted </h1>
+        <% } %> 
+    </div>
+</div>

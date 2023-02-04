@@ -1,0 +1,280 @@
+<style>
+    .billing-info-wrap .billing-info .error {
+        color: red;
+    }
+</style>
+<div class="breadcrumb-area breadcrumb-area-padding-2 bg-gray-2">
+    <div class="custom-container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li class="active">Checkout</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="checkout-area pt-75 pb-75">
+    <div class="container">
+        <form method="POST" id="checkout" action="/cart/checkout">
+            <div class="row">
+                <div class="col-lg-7">
+                    <% if(typeof addressess != 'undefined' ){ %> 
+                        <div class="customer-zone padding-20-row-col mb-10">
+                            <p class="cart-page-title">Other Address <a class="checkout-click1" href="#">Click here to See</a></p>
+                            <div class="checkout-login-info">
+                                <% addressess.forEach(address => { %>
+                                 
+                                    <div class="card m-2">
+                                        <div class="card-body">
+                                            <input required type="radio" name="oldaddress" id="address-<%= address._id %> " value="<%= address._id %>">
+                                            <span>
+                                                <p><%= address.firstname %>  <%= address.lastname %> </p>
+                                                <p><%= address.street %> ,  <%= address.apartment %> , <%= address.city %> , <%= address.state %> , <%= address.zip %> , <%= address.email %>  , <%= address.phone  %> </p>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                <% }) %>
+                            </div>
+                        </div>
+                    <% } %> 
+                    <!-- <div class="billing-info-wrap padding-20-row-col" id="addressinfo">
+                        
+                        <h3>Billing details</h3>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info input-style mb-35">
+                                    <label>First Name *</label>
+                                    <input type="text" placeholder="First Name" name="firstname">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info input-style mb-35">
+                                    <label>Last Name *</label>
+                                    <input type="text" placeholder="Last Name" name="lastname">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="billing-info input-style mb-35">
+                                    <label>Country *</label>
+                                    <input type="text" name="country" placeholder="Country">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info input-style mb-35">
+                                    <label>Street Address *</label>
+                                    <input class="billing-address" name="street" placeholder="House number and street name" type="text">
+                                    <input name="apartment" placeholder="Apartment, suite, unit, etc. (optional)" type="text">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info input-style mb-35">
+                                    <label>Town / City *</label>
+                                    <input type="text" name="city" placeholder="Town / City ">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="billing-info input-style mb-35">
+                                    <label>State *</label>
+                                    <input type="text" name="state" placeholder="State">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="billing-info input-style mb-35">
+                                    <label>ZIP *</label>
+                                    <input type="text" name="zip" placeholder="ZIP">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="billing-info input-style mb-35">
+                                    <label>Phone *</label>
+                                    <input type="text" name="phone" placeholder="Phone">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="billing-info input-style mb-35">
+                                    <label>Email Address *</label>
+                                    <input type="email" name="email" placeholder="Email Address">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="different-address mt-35">
+                            <input class="checkout-toggle" type="checkbox" name="type" id="type">
+                            <span>Ship to a different address?</span>
+                        </div>
+                        <div class="different-address open-toggle mt-35">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="billing-info input-style mb-35">
+                                        <label>First Name *</label>
+                                        <input type="text" placeholder="First Name" id="s_firstname" name="s_firstname">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="billing-info input-style mb-35">
+                                        <label>Last Name *</label>
+                                        <input type="text" placeholder="Last Name" id="s_lastname" name="s_lastname">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="billing-info input-style mb-35">
+                                        <label>Street Address *</label>
+                                        <input class="billing-address" name="s_street" id="s_street" placeholder="House number and street name"
+                                            type="text">
+                                        <input name="s_apartment" placeholder="Apartment, suite, unit, etc. (optional)" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="billing-info input-style mb-35">
+                                        <label>Town / City *</label>
+                                        <input type="text" name="s_city" id="s_city" placeholder="Town / City ">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="billing-info input-style mb-35">
+                                        <label>State *</label>
+                                        <input type="text" name="s_state" id="s_state" placeholder="State">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="billing-info input-style mb-35">
+                                        <label>ZIP *</label>
+                                        <input type="text" name="s_zip" id="s_zip" placeholder="ZIP">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="billing-info input-style mb-35">
+                                        <label>Phone *</label>
+                                        <input type="text" name="s_phone" id="s_phone" placeholder="Phone">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="billing-info input-style mb-35">
+                                        <label>Email Address *</label>
+                                        <input type="email" name="s_email" id="s_email" placeholder="Email Address">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="additional-info-wrap">
+                            <label>Order notes (optional)</label>
+                            <textarea placeholder="Notes about your order, e.g. special notes for delivery."
+                                name="notes"></textarea>
+                        </div>
+                    </div> -->
+                    <div class="payment-details-area">
+                        <h4>Payment information</h4>
+                        <div class="payment-method">
+                            <div class="sin-payment payment-selected mb-20">
+                                <input id="payment_method_1" class="input-radio" type="radio" value="bank"
+                                    checked="checked" name="payment_method">
+                                <label for="payment_method_1">
+                                    <span>
+                                        <img class="nomal-img" src="/images/icon-img/direct-bank.png" alt="">
+                                        <img class="active-img" src="/images/icon-img/direct-bank-active.png" alt="">
+                                    </span>
+                                    Direct bank transfer
+                                </label>
+                                <div class="payment-box payment_method_bacs">
+                                    <p>Make your payment directly into our bank account. Please use your Order ID as the
+                                        payment reference. Your order will not be shipped until the funds have cleared in
+                                        our account.</p>
+                                </div>
+                            </div>
+                            <div class="sin-payment mb-20">
+                                <input id="payment-method-2" class="input-radio" type="radio" value="cheque"
+                                    name="payment_method">
+                                <label for="payment-method-2">
+                                    <span>
+                                        <img class="nomal-img" src="/images/icon-img/check-payments.png" alt="">
+                                        <img class="active-img" src="/images/icon-img/check-payments-active.png"
+                                            alt="">
+                                    </span>
+                                    Check payments
+                                </label>
+                                <div class="payment-box payment_method_bacs">
+                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
+                                        Store Postcode.</p>
+                                </div>
+                            </div>
+                            <div class="sin-payment mb-20">
+                                <input id="payment-method-3" class="input-radio" type="radio" value="cod"
+                                    name="payment_method">
+                                <label for="payment-method-3">
+                                    <span>
+                                        <img class="nomal-img" src="/images/icon-img/cash-on-delivery.png" alt="">
+                                        <img class="active-img" src="/images/icon-img/cash-on-delivery-active.png"
+                                            alt="">
+                                    </span>
+                                    Cash on delivery
+                                </label>
+                                <div class="payment-box payment_method_bacs">
+                                    <p>Pay with cash upon delivery.</p>
+                                </div>
+                            </div>
+                            <div class="sin-payment">
+                                <input id="payment-method-4" class="input-radio" type="radio" value="paypal"
+                                    name="payment_method">
+                                <label for="payment-method-4">
+                                    <span>
+                                        <img class="nomal-img" src="/images/icon-img/paypal.png" alt="">
+                                        <img class="active-img" src="/images/icon-img/paypal-active.png" alt="">
+                                    </span>
+                                    PayPal
+                                </label>
+                                <div class="payment-box payment_method_bacs">
+                                    <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="order-summary">
+                        <div class="order-summary-title">
+                            <h3>Order summary</h3>
+                        </div>
+                        <div class="order-summary-top">
+                            <% total = null; %> 
+                            <% cartItems.forEach(item => { %>
+                            
+                                <div class="order-summary-img-price">
+                                    <div class="order-summary-img-title">
+                                        <div class="order-summary-img">
+                                            <a href="/product/<%=  item.productId.slug  %>"><img src="/uploads/<%= item.productId.image  %>" alt="<%= item.productId.title  %> "></a>
+                                        </div>
+                                        <div class="order-summary-title">
+                                            <h4><%= item.productId.title %> <span>× <%= item.quantity %> </span></h4>
+                                        </div>
+                                    </div>
+                                    <div class="order-summary-price">
+                                        <% total += item.productId.price * item.quantity %> 
+                                        <span>$<%= parseFloat(item.productId.price * item.quantity).toFixed(2)  %></span>
+                                    </div>
+                                </div>
+
+                            <% }) %>
+                        </div>
+                        <div class="order-summary-middle">
+                            <ul>
+                                <li>Subtotal <h4>$<%= parseFloat(total).toFixed(2)  %></h4>
+                                </li>
+                                <li>Shipping <h4><span>Flat rate:</span><span class="price">$0.00</span></h4>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="order-summary-bottom">
+                            <h4>Total <span>$<%= parseFloat(total).toFixed(2)  %></span></h4>
+                        </div>
+                    </div>
+                    <div class="order-summary">
+                        <button type="submit" class="btn btn-info rounded mt-2" style="width: 100%;">Proceed To Pay</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

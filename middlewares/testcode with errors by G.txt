@@ -1,0 +1,71 @@
+const isCart = async (req, resp, next) => {
+    const token = req.cookies.token;
+    if (token) {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.user.id);
+        if (user) {
+            req.session.user = user;
+            if (req.cookies.cart) {
+                const cart = req.cookies.cart;
+                if (cart.length > 0) {
+                    cart.forEach(async (item, index) => {
+                        const product = await Product.findById(item.productId);
+                        if (product && product.stock) {
+                            const alreadyCartItem = await Cart.findOne({ user: user._id, productId: product._id });
+                            if (alreadyCartItem) {
+                                var oldquantity = alreadyCartItem.quantity;
+                                var cookiequantity = item.quantity;
+                                if (cookiequantity <= 1) {
+                                    var cookiequantity = 1;
+                                }
+                                var newquantity = oldquantity + cookiequantity;
+                                const updateOldCartItem = await Cart.updateOne({ user: user._id, productId: product._id }, { $set: { quantity: newquantity } });
+                                if (!updateOldCartItem) {
+                                    throw new Error('Error occured while updating Cart quantity in database');
+                                }
+                                cart.splice(index, 1);
+                                // resp.cookie('cart');
+                            }
+                            else {
+                                const cartSave = new Cart({
+                                    user: user._id,
+                                    productId: product._id,
+                                    quantity: item.quantity,
+                                    subTotal: item.quantity * product.price,
+                                });
+                                await cartSave.save();
+                                cart.splice(index, 1);
+                                // resp.cookie('cart');
+                            }
+                           return resp.cookie('cart');
+                        }
+                        else {
+                            cart.splice(index, 1);
+                            resp.cookie('cart');
+                        }
+                    });
+                }
+            }
+            req.data = user;
+           return next();
+        }
+        else {
+            req.session.message = {
+                type: 'warning',
+                message: `Please Login and Enjoy Shopping`
+            };
+           return resp.redirect('/user/login');
+        }
+    }
+    else if (req.cookies.cart && !token) {
+        req.data = 'cookie';
+       return next();
+    } else {
+        req.session.message = {
+            type: 'error',
+            message: 'Internal Server Error'
+        };
+        return resp.redirect('/shop')
+    }
+
+}

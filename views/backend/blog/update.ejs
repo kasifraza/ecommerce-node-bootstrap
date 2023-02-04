@@ -1,0 +1,80 @@
+<script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Update <%= blog.title  %> </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/blog/index">Blogs</a></li>
+                    <li class="breadcrumb-item active">Update Blog</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form action="/admin/blog/update/<%= blog._id  %> " method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" name="title" id="title" class="form-control" value="<%= blog.title  %> " >
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" class="form-control" rows="4">
+                                <%= blog.description  %> 
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status" name="status" class="form-control custom-select">
+                                <option disabled>Select one</option>
+                                <option value="1" <%= (blog.status == true) ? 'selected' : '' %> >ACTIVE</option>
+                                <option value="0" <%= (blog.status == false) ? 'selected' : '' %> >IN-ACTIVE</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input type="file" id="image" name="image" class="form-control form-control-lg" value="">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Update" class="btn btn-success float-right">
+                        </div>
+                    </form>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <% if (blog.image != null) { %>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="/uploads/<%= blog.image  %> "  style="object-fit: fill; width: 100%;" />
+                    </div>
+                </div>
+            </div>
+        <% } %> 
+    </div>
+</section>
+<!-- /.content -->
+<script>
+    CKEDITOR.replace( 'description' );
+</script> 
