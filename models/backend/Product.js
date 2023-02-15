@@ -6,6 +6,11 @@ const productSchema = new mongoose.Schema({
         // type:String
          type: mongoose.Schema.Types.ObjectId, ref: 'Category'
     },
+    brand:{
+        // required:true, 
+        // type:String
+         type: mongoose.Schema.Types.ObjectId, ref: 'Brand'
+    },
     title:{
         required:true,
         type:String
@@ -48,6 +53,13 @@ const productSchema = new mongoose.Schema({
     },
     image:{
         type:String,
+    },
+    images: [],
+    mark :{
+        type:String,
+        default:false,
+        enum : ['HOT','SALE']
+
     }
 });
 productSchema.plugin(URLSlugs('title'));

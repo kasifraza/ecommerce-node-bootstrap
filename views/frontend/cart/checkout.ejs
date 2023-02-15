@@ -22,7 +22,7 @@
                 <div class="col-lg-7">
                     <% if(typeof addressess != 'undefined' ){ %> 
                         <div class="customer-zone padding-20-row-col mb-10">
-                            <p class="cart-page-title">Other Address <a class="checkout-click1" href="#">Click here to See</a></p>
+                            <p class="cart-page-title"><b>Select Delivery Address</b> <a class="checkout-click1" href="#">Click here to See</a></p>
                             <div class="checkout-login-info">
                                 <% addressess.forEach(address => { %>
                                  
@@ -40,130 +40,6 @@
                             </div>
                         </div>
                     <% } %> 
-                    <!-- <div class="billing-info-wrap padding-20-row-col" id="addressinfo">
-                        
-                        <h3>Billing details</h3>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info input-style mb-35">
-                                    <label>First Name *</label>
-                                    <input type="text" placeholder="First Name" name="firstname">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info input-style mb-35">
-                                    <label>Last Name *</label>
-                                    <input type="text" placeholder="Last Name" name="lastname">
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                                <div class="billing-info input-style mb-35">
-                                    <label>Country *</label>
-                                    <input type="text" name="country" placeholder="Country">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="billing-info input-style mb-35">
-                                    <label>Street Address *</label>
-                                    <input class="billing-address" name="street" placeholder="House number and street name" type="text">
-                                    <input name="apartment" placeholder="Apartment, suite, unit, etc. (optional)" type="text">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="billing-info input-style mb-35">
-                                    <label>Town / City *</label>
-                                    <input type="text" name="city" placeholder="Town / City ">
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                                <div class="billing-info input-style mb-35">
-                                    <label>State *</label>
-                                    <input type="text" name="state" placeholder="State">
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12">
-                                <div class="billing-info input-style mb-35">
-                                    <label>ZIP *</label>
-                                    <input type="text" name="zip" placeholder="ZIP">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-12">
-                                <div class="billing-info input-style mb-35">
-                                    <label>Phone *</label>
-                                    <input type="text" name="phone" placeholder="Phone">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-12">
-                                <div class="billing-info input-style mb-35">
-                                    <label>Email Address *</label>
-                                    <input type="email" name="email" placeholder="Email Address">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="different-address mt-35">
-                            <input class="checkout-toggle" type="checkbox" name="type" id="type">
-                            <span>Ship to a different address?</span>
-                        </div>
-                        <div class="different-address open-toggle mt-35">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="billing-info input-style mb-35">
-                                        <label>First Name *</label>
-                                        <input type="text" placeholder="First Name" id="s_firstname" name="s_firstname">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="billing-info input-style mb-35">
-                                        <label>Last Name *</label>
-                                        <input type="text" placeholder="Last Name" id="s_lastname" name="s_lastname">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="billing-info input-style mb-35">
-                                        <label>Street Address *</label>
-                                        <input class="billing-address" name="s_street" id="s_street" placeholder="House number and street name"
-                                            type="text">
-                                        <input name="s_apartment" placeholder="Apartment, suite, unit, etc. (optional)" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="billing-info input-style mb-35">
-                                        <label>Town / City *</label>
-                                        <input type="text" name="s_city" id="s_city" placeholder="Town / City ">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="billing-info input-style mb-35">
-                                        <label>State *</label>
-                                        <input type="text" name="s_state" id="s_state" placeholder="State">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="billing-info input-style mb-35">
-                                        <label>ZIP *</label>
-                                        <input type="text" name="s_zip" id="s_zip" placeholder="ZIP">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="billing-info input-style mb-35">
-                                        <label>Phone *</label>
-                                        <input type="text" name="s_phone" id="s_phone" placeholder="Phone">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="billing-info input-style mb-35">
-                                        <label>Email Address *</label>
-                                        <input type="email" name="s_email" id="s_email" placeholder="Email Address">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="additional-info-wrap">
-                            <label>Order notes (optional)</label>
-                            <textarea placeholder="Notes about your order, e.g. special notes for delivery."
-                                name="notes"></textarea>
-                        </div>
-                    </div> -->
                     <div class="payment-details-area">
                         <h4>Payment information</h4>
                         <div class="payment-method">

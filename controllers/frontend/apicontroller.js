@@ -6,7 +6,10 @@ const ejs = require("ejs");
 const nodemailer = require("nodemailer");
 const cartHelper = require('../../helpers/cart');
 const Cart = require('../../models/backend/Cart');
+const Cache = require('../../models/backend/Cache');
 const Address = require('../../models/backend/Address');
+const moment = require('moment');
+const _ = require('lodash');
 require('dotenv').config();
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -271,6 +274,38 @@ module.exports = {
             errorstatus = error.status || 500;
             return resp.status(errorstatus).json({ status: false, message: error.message || 'Internal Server Error' });
         }
+    },
+    test:async (req,resp)=>{
+        // let cachedProductData = [];
+        // let cachedTimestamp = null;
+        // const refreshProductData = async () => {
+        //     cachedProductData = await Product.find({});
+        //     cachedTimestamp = moment();          
+        //     await Cache.deleteMany({});
+        //     await Cache.create({
+        //       data: cachedProductData,
+        //       timestamp: cachedTimestamp.toDate()
+        //     });
+        // }
+        // const getCachedProductData = async () => {
+        //     if (!cachedProductData || !cachedTimestamp) {
+        //       const cache = await Cache.findOne({});
+        //       if (cache) {
+        //         cachedProductData = cache.data;
+        //         cachedTimestamp = moment(cache.timestamp);
+        //       }
+        //     }
+          
+        //     const now = moment();
+        //     const timeDifference = moment.duration(now.diff(cachedTimestamp)).asHours();
+        //     if (!cachedProductData || timeDifference >= 24) {
+        //       refreshProductData();
+        //     }
+        //     return cachedProductData;
+        //   }
+        //   setInterval(() => {
+        //     getCachedProductData();
+        //   }, 24 * 60 * 60 * 1000); // Runs once a day
     }
 
 }

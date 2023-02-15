@@ -6,7 +6,10 @@ const admincontroller = require("../../controllers/backend/admincontroller");
 const blogcontroller = require("../../controllers/backend/blogcontroller");
 const categorycontroller = require("../../controllers/backend/categorycontroller");
 const productcontroller = require("../../controllers/backend/productcontroller");
-// require('./categoryRoutes');
+const errorHandler = require("../../middlewares/errorHandler");
+const { uploadPhoto, productImgResize , singleProductImgResize } = require('../../middlewares/uploadImages');
+const bannerRoutes =  require('./bannerRoutes');
+const {isAdmin} = require('../../middlewares/isAdmin');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -26,138 +29,163 @@ router.all("/*", (req, resp, next) => {
   next();
 });
 
-// admin index page
-router.route("/").get(admincontroller.index);
 
-router.route("/index").get(admincontroller.index);
+// admin index page
+router.route("/").get(isAdmin,admincontroller.index);
+
+// Admin Login
+router
+.route("/login")
+.get(admincontroller.login)
+.post(admincontroller.loginPost);
+
+// admin logout
+router
+.route("/logout")
+.get(admincontroller.logout);
+
+// Admin Index
+
+router.route("/index").get(isAdmin,admincontroller.index);
 
 // about update page
 router
   .route("/about/update")
-  .get(admincontroller.about)
-  .post(admincontroller.updateabout);
+  .get(isAdmin,admincontroller.about)
+  .post(isAdmin,admincontroller.updateabout);
 
 // blog create
 router
   .route("/blog/create")
-  .get(blogcontroller.create)
-  .post(upload.single("image"), blogcontroller.createblog);
+  .get(isAdmin,blogcontroller.create)
+  .post(isAdmin,upload.single("image"), blogcontroller.createblog);
 
 // blog update
 router
   .route("/blog/update/:id")
-  .get(blogcontroller.update)
-  .post(upload.single("image"), blogcontroller.updateblog);
+  .get(isAdmin,blogcontroller.update)
+  .post(isAdmin,upload.single("image"), blogcontroller.updateblog);
 
 // blog delete with id
 router
   .route('/blog/delete/:id')
-  .get(blogcontroller.delete);
+  .get(isAdmin,blogcontroller.delete);
 
 
 // blog index
 router
   .route("/blog/index")
-  .get(blogcontroller.index)
+  .get(isAdmin,blogcontroller.index)
 router
   .route("/blog")
-  .get(blogcontroller.index)
+  .get(isAdmin,blogcontroller.index)
 
 // blog view
 router
   .route("/blog/view/:id")
-  .get(blogcontroller.view)
+  .get(isAdmin,blogcontroller.view)
 
 
 // CATEGORY
 
 // category index page
-router.route("/category").get(categorycontroller.index);
+router.route("/category").get(isAdmin,categorycontroller.index);
 
-router.route("/category/index").get(categorycontroller.index);
+router.route("/category/index").get(isAdmin,categorycontroller.index);
 
 
 // category create
 router
   .route("/category/create")
-  .get(categorycontroller.create)
-  .post(upload.single("image"), categorycontroller.createcategory);
+  .get(isAdmin,categorycontroller.create)
+  .post(isAdmin,upload.single("image"), categorycontroller.createcategory);
 
 // category update
 router
   .route("/category/update/:id")
-  .get(categorycontroller.update)
-  .post(upload.single("image"), categorycontroller.updatecategory);
+  .get(isAdmin,categorycontroller.update)
+  .post(isAdmin,upload.single("image"), categorycontroller.updatecategory);
 
 // category delete with id
 router
   .route('/category/delete/:id')
-  .get(categorycontroller.delete);
+  .get(isAdmin,categorycontroller.delete);
 
 
 // category index
 router
   .route("/category/index")
-  .get(categorycontroller.index)
+  .get(isAdmin,categorycontroller.index)
 router
   .route("/category")
-  .get(categorycontroller.index)
+  .get(isAdmin,categorycontroller.index)
 
 // category view
 router
   .route("/category/view/:id")
-  .get(categorycontroller.view)
+  .get(isAdmin,categorycontroller.view)
 
 
 
 // PRODUCT
 
 // product index page
-router.route("/product").get(productcontroller.index);
+router.route("/product").get(isAdmin,productcontroller.index);
 
-router.route("/product/index").get(productcontroller.index);
+router.route("/product/index").get(isAdmin,productcontroller.index);
 
 
 // product create
 router
   .route("/product/create")
-  .get(productcontroller.create)
-  .post(
-  //   [
-  //   body("title").notEmpty(),
-  //   body("category").notEmpty(),
-  //   body("price").isNumeric(),
-  //   body("description").isString(),
-  //   body("status").isBoolean(),
-  //   body("stock").isBoolean(),
-  //   body("additional").isString(),
-
-  // ],
-    upload.single("image"), productcontroller.createproduct);
+  .get(isAdmin,productcontroller.create)
+  .post(isAdmin,upload.single("image"), productcontroller.createproduct);
 
 // product update
 router
   .route("/product/update/:id")
-  .get(productcontroller.update)
+  .get(isAdmin,productcontroller.update)
   .post(upload.single("image"), productcontroller.updateproduct);
 
 // product delete with id
 router
   .route('/product/delete/:id')
-  .get(productcontroller.delete);
+  .get(isAdmin,productcontroller.delete);
+
+// product upload images with id
+router
+  .route('/product/upload-image/create/:id')
+  .get(isAdmin,productcontroller.createProductImage)
+  .post(isAdmin,uploadPhoto.array('images', 10),productImgResize,productcontroller.uploadProductImages);
+// show all images of product using product id
+router
+ .route('/product/upload-image/:id')
+ .get(isAdmin,productcontroller.indexProductImages);
+
+//  update a particuler image from images array
+router
+ .route('/product/upload-image/update/:id/:index')
+ .get(isAdmin,productcontroller.updateSingleProductImage)
+ .post(isAdmin,uploadPhoto.single('image'),singleProductImgResize,productcontroller.updateSingleProductImagePost);
+
+ 
+//  Delete a particuler image from images array
+router
+ .route('/product/upload-image/delete/:id/:index')
+ .get(isAdmin,productcontroller.deleteSingleProductImage);
 
 
 // product index
 router
   .route("/product/index")
-  .get(productcontroller.index)
+  .get(isAdmin,productcontroller.index)
 router
   .route("/product")
-  .get(productcontroller.index)
+  .get(isAdmin,productcontroller.index)
 
 // product view
 router
   .route("/product/view/:id")
-  .get(productcontroller.view)
+  .get(isAdmin,productcontroller.view)
 
 module.exports = router;

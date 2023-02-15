@@ -10,9 +10,15 @@ exports.getCategoryName =  function(cat_id) {
     //     console.log(err);
     // }
     Category.findById(cat_id).then(category => {
-        console.log(category.title);
+        // console.log(category.title);
         return category.title;
     }).catch(err => {
         console.log(err);
     });
+};
+
+exports.allCategories = async (req, res, next) => {
+  const categories = await Category.find({}).populate('products');
+  req.app.locals.categories = categories;
+  next();
 };

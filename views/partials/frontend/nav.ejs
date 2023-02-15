@@ -1,3 +1,8 @@
+<% 
+var numberofColumns = 4;
+var rowCount = 0;
+var bootstrapColumns = 12 / numberofColumns;
+%> 
 <header class="header-area header-height-1">
     <div class="header-top header-top-ptb-1 bg-gray d-none d-lg-block">
         <div class="custom-container">
@@ -5,7 +10,9 @@
                 <div class="col-xl-3 col-lg-4">
                     <div class="header-info">
                         <ul>
-                            <li><a href="#">(+88) - 1990 - 6886</a></li>
+                            <li>
+                                <a href="#">(+88) - 1990 - 6886   </a>
+                            </li>
                             <li><a target="_blank" href="https://www.google.com/maps">Store location</a></li>
                         </ul>
                     </div>
@@ -51,87 +58,36 @@
                 <div class="main-menu main-menu-padding-1 main-menu-lh-1 d-none d-lg-block hover-boder">
                     <nav>
                         <ul>
-                            <li><a class="active" href="index.html">Home <i class="fa fa-chevron-down"></i></a>
+                            <li><a class="active" href="/">Home</a></li>
+                            <li><a href="/shop">Category <i class="fa fa-chevron-down"></i></a>
                                 <ul class="sub-menu">
-                                    <li><a href="index.html">Home 1 – Medical Supplies</a></li>
-                                    <li><a href="index-2.html">Home 2 – Mega Shop</a></li>
-                                    <li><a href="index-3.html">Home 3 – Medical Equipment</a></li>
+                                    <% categories.forEach(category => { %>
+                                        <li><a href="/shop/category/<%= category.slug %>"><%= category.title  %> </a></li>
+                                    <% }) %>
                                 </ul>
                             </li>
-                            <li><a href="/shop">Shop <i class="fa fa-chevron-down"></i></a>
-                                <ul class="sub-menu">
-                                    <li><a href="shop.html">Shop – Left Sidebar</a></li>
-                                    <li><a href="shop-right-sidebar.html">Shop – Right Sidebar</a></li>
-                                    <li><a href="shop-filter.html">Shop – Filter</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="cart.html">Shopping Cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="#">Single Layout <i class="fa fa-chevron-right"></i></a>
-                                        <ul class="level-menu">
-                                            <li><a href="product-details.html">List – Left Sidebar</a></li>
-                                            <li><a href="product-details-right-sidebar.html">List – Right Sidebar</a></li>
-                                            <li><a href="product-details-no-sidebar.html">List – No Sidebar</a></li>
-                                            <li><a href="product-details-tab-left-sidebar.html">Tabs – Left Sidebar</a></li>
-                                            <li><a href="product-details-tab-right-sidebar.html">Tabs – Right Sidebar</a></li>
-                                            <li><a href="product-details-tab-no-sidebar.html">Tabs – No Sidebar</a></li>
-                                        </ul>
-                                    </li>
+                            <li class="position-static" ><a href="#">Products<i class="fa fa-chevron-down"></i></a>
+                                <ul class="mega-menu"  style="overflow-y: scroll;height: 350px;" >
+                                    <div class="row mt-1">
+                                        <% var i=1; %> 
+                                        <% categories.forEach(category => { %>
+                                            <li class="sub-mega-menu sub-mega-menu-width-22">
+                                                <a class="menu-title" style="text-align: center;" href="/shop/category/<%= category.slug %>"><%= category.title %> </a>
+                                                <ul>
+                                                    <% var categoryWiseProducts = category.products %> 
+                                                    <% categoryWiseProducts.forEach(product => { %>
+                                                        <li><a href="/shop/product/<%= product.slug %>"><%= product.title %> </a></li>
+                                                    <% }) %> 
+                                                </ul>
+                                            </li>
+                                            <% rowCount++; if(rowCount % numberofColumns == 0){ %> 
+                                                </div><hr /><div class="row mt-1">
+                                            <% } %> 
+                                        <% }) %> 
+                                    </div>
                                 </ul>
                             </li>
-                            <li class="position-static"><a href="#">Collection <i class="fa fa-chevron-down"></i></a>
-                                <ul class="mega-menu">
-                                    <li class="sub-mega-menu sub-mega-menu-width-22">
-                                        <a class="menu-title" href="#">Medical Accessories</a>
-                                        <ul>
-                                            <li><a href="product-details.html">Ice Cold Water Therapy</a></li>
-                                            <li><a href="product-details.html">Oxygen Breathing Machine</a></li>
-                                            <li><a href="product-details.html">Stainless Steel Kidney Tray</a></li>
-                                            <li><a href="product-details.html">Stainless Steel Scissors</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="sub-mega-menu sub-mega-menu-width-22">
-                                        <a class="menu-title" href="#">Face Mask</a>
-                                        <ul>
-                                            <li><a href="product-details.html">Surgical Face Mask</a></li>
-                                            <li><a href="product-details.html">Search Lab N95 Face Mask</a></li>
-                                            <li><a href="product-details.html">N95 Face Mask</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="sub-mega-menu sub-mega-menu-width-22">
-                                        <a class="menu-title" href="#">Hospital Equipment</a>
-                                        <ul>
-                                            <li><a href="product-details.html">Hospital Ward Bed</a></li>
-                                            <li><a href="product-details.html">Lightweight Transport Chair</a></li>
-                                            <li><a href="product-details.html">Men V-Neck Scrub Top</a></li>
-                                            <li><a href="product-details.html">Essentials Pocket Scrub</a></li>
-                                            <li><a href="product-details.html">Manual Oxygen Device</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="sub-mega-menu sub-mega-menu-width-34">
-                                        <div class="menu-banner-wrap">
-                                            <a href="product-details.html"><img src="/images/banner/menu-banner.jpg" alt=""></a>
-                                            <div class="menu-banner-content">
-                                                <h4>Personal</h4>
-                                                <h3>Temperature <br> Gun</h3>
-                                                <div class="menu-banner-price">
-                                                    <span class="new-price">$35.00</span>
-                                                    <span class="old-price">$45.00</span>
-                                                </div>
-                                                <div class="menu-banner-btn">
-                                                    <a href="product-details.html">Shop now</a>
-                                                </div>
-                                            </div>
-                                            <div class="menu-banner-discount">
-                                                <h3>
-                                                    <span>22%</span>
-                                                    off
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="blog.html">Blog <i class="fa fa-chevron-down"></i></a>
+                            <!-- <li><a href="blog.html">Blog <i class="fa fa-chevron-down"></i></a>
                                 <ul class="sub-menu">
                                     <li><a href="blog.html">Blog Grid – Left Sidebar</a></li>
                                     <li><a href="blog-grid-right-sidebar.html">Blog Grid – Right Sidebar</a></li>
@@ -145,21 +101,9 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </li>
-                            <li><a href="#">Pages <i class="fa fa-chevron-down"></i></a>
-                                <ul class="sub-menu">
-                                    <li><a href="about-us.html">About Us</a></li>
-                                    <li><a href="contact-us.html">Contact</a></li>
-                                    <li><a href="compare.html">Compare</a></li>
-                                    <li><a href="my-account.html">My Account</a></li>
-                                    <li><a href="/user/login">login/register</a></li>
-                                    <li><a href="purchase-guide.html">Purchase Guide</a></li>
-                                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                    <li><a href="terms-of-service.html">Terms of Service</a></li>
-                                    <li><a href="404.html">404 Page</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="contact-us.html">Contact</a></li>
+                            </li> -->
+                            <li><a href="/about-us">About-Us</a></li>
+                            <li><a href="/contact-us">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -176,7 +120,7 @@
                                 <i class="far fa-shopping-bag"></i>
                                 <span class="pro-count blue"><%= cartCount %></span>
                             </a>
-                            <div class="cart-dropdown-wrap">
+                            <!-- <div class="cart-dropdown-wrap">
                                 <ul>
                                     <li>
                                         <div class="shopping-cart-img">
@@ -212,7 +156,7 @@
                                         <a href="checkout.html">Checkout</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="header-action-icon d-block d-lg-none">
                             <div class="burger-icon">

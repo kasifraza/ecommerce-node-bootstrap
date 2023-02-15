@@ -8,8 +8,22 @@ const expressLayouts = require('express-ejs-layouts')
 const mongoUrl = process.env.MONGOURL;
 const helpers = require('./helpers/helper');
 const retrieveCartCount = require('./middlewares/cartCount');
+const catlist = require('./middlewares/catList');
 const User = require('./models/backend/User');
 const jwt = require('jsonwebtoken');
+const Category = require('./models/backend/Category');
+const bannerRoutes = require('./routes/admin/bannerRoutes');
+const brandRoutes = require('./routes/admin/brandRoutes');
+const ctaRoutes = require('./routes/admin/ctaRoutes');
+const defaultRoutes = require('./routes/default/defaultRoutes');
+const adminRoutes = require('./routes/admin/adminRoutes');
+const shopRoutes = require('./routes/default/product/productRoutes');
+const userRoutes = require('./routes/default/users/userRoutes');
+const cartRoutes = require('./routes/default/product/cartRoutes');
+const testimonialRoutes = require('./routes/admin/testimonialRoutes');
+const apiRoutes = require('./routes/api/apiRoutes');
+const errorHandler = require('./middlewares/errorHandler');
+const { isAdmin } = require('./middlewares/isAdmin');
 
 
 const app = express();
@@ -22,9 +36,9 @@ mongoose.connect(mongoUrl, {
 
 // ALL uses
 app.use(session({
-    secret: 'sessionjhh flash',
-    resave: false,
-    saveUninitialized: true,
+  secret: 'sessionjhh flash',
+  resave: false,
+  saveUninitialized: true,
   //   cookie: {
   //     secure: true,
   //     httpOnly: true,
@@ -35,95 +49,80 @@ app.use(session({
 // cookie use
 app.use(cookieParser());
 
-app.use((req,resp,next) => {
-  if(req.cookies.token){
+app.use((req, resp, next) => {
+  if (req.cookies.token) {
     const token = req.cookies.token;
-    jwt.verify(token, process.env.JWT_SECRET,async (error, decoded) => {
-        if (error) {
-            resp.clearCookie('token');
+    jwt.verify(token, process.env.JWT_SECRET, async (error, decoded) => {
+      if (error) {
+        resp.clearCookie('token');
+      }
+      else {
+        const user = await User.findById(decoded.user.id);
+        if (user) {
+          req.session.user = user;
+          req.data = user;
         }
-        else {
-            const user = await User.findById(decoded.user.id);
-            if (user) {
-                req.session.user = user;
-                req.data = user;
-                
-            }
-        }
+      }
     });
   }
   resp.locals.message = req.session.message;
   resp.locals.user = req.session.user;
+  resp.locals.admin = req.session.admin;
   resp.locals.checkoutUser = req.session.checkoutUser;
   delete req.session.message;
   next();
 });
 
 
+// setting all category for ejs view file in header
+app.use(helpers.allCategories);
+
 
 app.use(express.json());
 
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('uploads'));
-app.use(express.static(path.join(__dirname,'assets')));
+// app.use(express.static('uploads/products'));
+app.use(express.static(path.join(__dirname, 'assets')));
 // retrieve cart count
 app.use(retrieveCartCount);
 
+// retreive all category for navbar
 // Setting up my ejs view engine
 app.use(expressLayouts)
 app.set('layout', './layouts/layout')
-app.set('view engine','ejs');
+app.set('view engine', 'ejs');
 
 
 // Setting UP Helper
 app.locals.getCategoryName = helpers.getCategoryName;
-// Routes
-const defaultRoutes = require('./routes/default/defaultRoutes');
-const adminRoutes = require('./routes/admin/adminRoutes');
-const shopRoutes = require('./routes/default/product/productRoutes');
-const userRoutes = require('./routes/default/users/userRoutes');
-const cartRoutes = require('./routes/default/product/cartRoutes');
-const apiRoutes = require('./routes/api/apiRoutes');
-app.use('/',defaultRoutes);
+
+app.use('/', defaultRoutes);
 
 // Frontend product pages
-app.use('/shop',shopRoutes);
+app.use('/shop', shopRoutes);
 
 // Cart Routes
-app.use('/cart',cartRoutes);
+app.use('/cart', cartRoutes);
 
 // Frontend API
-app.use('/api',apiRoutes);
+app.use('/api', apiRoutes);
 
 // CMS 
-app.use('/admin',adminRoutes);
+app.use('/admin', adminRoutes);
+app.use('/admin/banner', isAdmin, bannerRoutes);
+app.use('/admin/brand', isAdmin, brandRoutes);
+app.use('/admin/testimonial', isAdmin, testimonialRoutes);
+app.use('/admin/cta', isAdmin, ctaRoutes);
 
 // Frontend User 
-app.use('/user',userRoutes);
+app.use('/user', userRoutes);
 
 
 //  error page
-app.use(function(err, req, resp, next) {
-  const currentUrl = req.originalUrl;
-  if(req.url.startsWith('/admin')) {
-    resp.status(err.status || 500);
-    // resp.json();
-    resp.render('./partials/backend/error', {
-        message: err.message,
-        error: err,
-        title : err.status,
-        currentUrl
-    });
-  } else {
-    resp.status(err.status || 500);
-    resp.render('./partials/frontend/error', {
-        message: err.message,
-        error: err
-    });
-  }
-});
- 
+app.use(errorHandler);
 
-app.listen(3000, () => {
-    console.log(`Server started on port`);
+
+app.listen(8000, () => {
+  console.log(`Server started on port`);
 });

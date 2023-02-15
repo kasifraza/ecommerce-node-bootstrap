@@ -58,6 +58,115 @@
                         </li>
                     </ul>
                 </li>
+                <!-- Banner -->
+                <li class="nav-item <%= (currentUrl === '/admin/banner/update' || currentUrl === '/admin/banner/view/' || currentUrl === '/admin/banner/index' || currentUrl === '/admin/banner/create') ? 'menu-open' : 'menu'  %>">                        
+                    <a href="#" class="nav-link"> 
+                        <i class="nav-icon fas fa-image"></i>
+                        <p>
+                            Banners
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/banner/index" class="nav-link <%= (currentUrl === '/admin/banner/update' || currentUrl === '/admin/banner/view' || currentUrl === '/admin/banner/index' || currentUrl === '/admin/banner') ? 'active' : ''  %>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Manage</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/banner/create" class="nav-link <%= (currentUrl === '/admin/banner/create') ? 'active' : ''  %>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Banner END -->
+
+                <!-- CTA -->
+                <li class="nav-item <%= (currentUrl === '/admin/cta/update' || currentUrl === '/admin/cta/view/' || currentUrl === '/admin/cta/index' || currentUrl === '/admin/cta/create') ? 'menu-open' : 'menu'  %>">                        
+                    <a href="#" class="nav-link"> 
+                        <i class="nav-icon fas fa-image"></i>
+                        <p>
+                            CTA
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/cta/index" class="nav-link <%= (currentUrl === '/admin/cta/update/' || currentUrl === '/admin/cta/view' || currentUrl === '/admin/cta/index' || currentUrl === '/admin/cta') ? 'active' : ''  %>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Manage</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/cta/create" class="nav-link <%= (currentUrl === '/admin/cta/create') ? 'active' : ''  %>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- CTA END -->
+
+
+                <!-- Brand -->
+                <li class="nav-item <%= (currentUrl === '/admin/brand/update' || currentUrl === '/admin/brand/view/' || currentUrl === '/admin/brand/index' || currentUrl === '/admin/brand/create') ? 'menu-open' : 'menu'  %>">                        
+                    <a href="#" class="nav-link"> 
+                        <i class="nav-icon fas fa-image"></i>
+                        <p>
+                            Brands
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/brand/index" class="nav-link <%= (currentUrl === '/admin/brand/update/' || currentUrl === '/admin/brand/view' || currentUrl === '/admin/brand/index' || currentUrl === '/admin/brand') ? 'active' : ''  %>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Manage</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/brand/create" class="nav-link <%= (currentUrl === '/admin/brand/create') ? 'active' : ''  %>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Brand END -->
+
+                <!-- Testimonials -->
+                <li class="nav-item <%= (currentUrl === '/admin/testimonial/update' || currentUrl === '/admin/testimonial/view/' || currentUrl === '/admin/testimonial/index' || currentUrl === '/admin/testimonial/create') ? 'menu-open' : 'menu'  %>">                        
+                    <a href="#" class="nav-link"> 
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Testimonials
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/testimonial/index" class="nav-link <%= (currentUrl === '/admin/testimonial/update/' || currentUrl === '/admin/testimonial/view' || currentUrl === '/admin/testimonial/index' || currentUrl === '/admin/testimonial') ? 'active' : ''  %>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Manage</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/testimonial/create" class="nav-link <%= (currentUrl === '/admin/testimonial/create') ? 'active' : ''  %>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Brand END -->
+                
                 <li class="nav-item <%= (currentUrl === '/admin/blog/update' || currentUrl === '/admin/blog/view/' || currentUrl === '/admin/blog/index' || currentUrl === '/admin/blog/create') ? 'menu-open' : 'menu'  %>">                        
                     <a href="#" class="nav-link"> 
                         <i class="nav-icon fas fa-blog"></i>

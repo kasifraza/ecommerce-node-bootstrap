@@ -1,0 +1,40 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-4">
+                <h6><%= cta.title  %> </h6>
+            </div>
+            <div class="col-sm-8">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/cta/index">CTA</a></li>
+                    <li class="breadcrumb-item active"><%= title  %> </li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <a href="/admin/cta/update/<%= cta._id  %>" class="btn btn-primary">Edit</a>
+                    <h2 class="mt-4"><%= cta.title  %> </h2>
+                    <hr />
+                    <p><b>Created Date:</b> <%= new Date(cta.createdAt)  %> </p>
+                    <hr />
+                    <p><b> Sub Title:</b> <%- cta.subtitle  %> </p>
+                    <hr />
+                    <p><b>Price:</b> $<%= parseFloat(cta.price).toFixed(2)  %> </p>
+                    <hr />
+                    <p><b>Link :</b> <%= cta.link %> </p>
+                    <hr />
+                    <img class="img-fluid rounded card-body shadow" src="/uploads/cta/<%= cta.image  %>" alt="<%= cta.title  %> " style="width: 200px;height: 200px;">
+                    <hr />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

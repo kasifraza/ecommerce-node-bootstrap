@@ -15,6 +15,8 @@ router.route('/user/create-address')
 router.route('/user/update-address/:id')
     .put(isApiUser,apicontroller.updateUserAddress);
 
+router.route('/test')
+.get(apicontroller.test);
 
 
 module.exports = router;

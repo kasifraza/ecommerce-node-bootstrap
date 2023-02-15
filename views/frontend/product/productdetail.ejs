@@ -39,47 +39,36 @@
                                                 <% } %> 
                                             </div>
                                         </div>
-                                        <div class="single-big-img-style">
-                                            <div class="pro-details-big-img">
-                                                <a class="img-popup"
-                                                    href="/images/product-details/pro-details-b-large-2.jpg">
-                                                    <img src="/images/product-details/pro-details-large-2.jpg"
-                                                        alt="">
-                                                </a>
-                                            </div>
-                                            <div class="pro-details-badges product-badges-position">
-                                                <span class="red">Sale !</span>
-                                            </div>
-                                        </div>
-                                        <div class="single-big-img-style">
-                                            <div class="pro-details-big-img">
-                                                <a class="img-popup"
-                                                    href="/images/product-details/pro-details-b-large-3.jpg">
-                                                    <img src="/images/product-details/pro-details-large-3.jpg"
-                                                        alt="">
-                                                </a>
-                                            </div>
-                                            <div class="pro-details-badges product-badges-position">
-                                                <span class="red">Sale !</span>
-                                            </div>
-                                        </div>
+                                        <% if(typeof product.images != 'undefined' && product.images.length > 0){ %> 
+                                            <% var images = product.images %> 
+                                            <% images.forEach(image => { %> 
+                                                <div class="single-big-img-style">
+                                                    <div class="pro-details-big-img">
+                                                        <a class="img-popup"
+                                                            href=<%= `/uploads/products/${image}` %>>
+                                                            <img src=<%= `/uploads/products/${image}` %>
+                                                                alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="pro-details-badges product-badges-position">
+                                                        <span class="red">Sale !</span>
+                                                    </div>
+                                                </div>
+                                            <% }) %>
+                                        <% } %>  
                                     </div>
                                     <div class="product-dec-slider-small product-dec-small-style1">
                                         <div class="product-dec-small active">
                                             <img src="/uploads/<%= product.image  %>" alt="">
                                         </div>
-                                        <div class="product-dec-small">
-                                            <img src="/images/product-details/pro-details-small-2.jpg" alt="">
-                                        </div>
-                                        <div class="product-dec-small">
-                                            <img src="/images/product-details/pro-details-small-3.jpg" alt="">
-                                        </div>
-                                        <div class="product-dec-small">
-                                            <img src="/images/product-details/pro-details-small-4.jpg" alt="">
-                                        </div>
-                                        <div class="product-dec-small">
-                                            <img src="/images/product-details/pro-details-small-2.jpg" alt="">
-                                        </div>
+                                        <% if(typeof product.images != 'undefined' && product.images.length > 0){ %> 
+                                            <% product.images.forEach(image => { %> 
+                                                <div class="product-dec-small">
+                                                    <img src=<%= `/uploads/products/${image}` %>  alt="">
+                                                </div>
+                                            <% }) %> 
+                                        <% } %> 
+                                        
                                     </div>
                                 </div>
                             </div>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #1a1a1a;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Thank you for your order!</h1>
+        <p>We have received your order and are working on processing it. You will receive an email notification when
+            your order has shipped.</p>
+        <h2>Order Details</h2>
+        <p>Order Number: <%= order._id %> </p>
+        <p>Order Date: <%= order.createdAt %> </p>
+        <p>Total Amount: $<%= order.amount.toFixed(2) %> </p>
+        <h3>Shipping Information</h3>
+        <p><%= order.address.firstname + ' '+ order.address.lastname  %> </p>
+        <p>Address: <%= order.address.street + ' , '+ order.address.apartment + ' , '+ order.address.city+ ' , '+ order.address.state+ ' , '+ order.address.zip %> </p>
+        <h3>Order Summary</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%  order.products.forEach(product => { %> 
+                    <tr>
+                        <td><%= product.product.title %> </td>
+                        <td>$<%= product.product.price %> </td>
+                        <td><%= product.quantity %> </td>
+                        <td>$<%= product.quantity * product.product.price %> </td>
+                    </tr>
+                <% }); %> 
+                <tr>
+                    <td colspan="3">Total</td>
+                    <td>$<%= order.amount.toFixed(2) %> </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="#" class="btn">View Order Details</a>
+    </div>
+</body>
+
+</html>

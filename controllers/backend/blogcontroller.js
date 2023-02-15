@@ -22,7 +22,7 @@ module.exports = {
         const currentUrl = req.originalUrl;
         Blog.find().exec((err, blogs) => {
             if (err) {
-                res.json({ message: err.message });
+                resp.json({ message: err.message });
             } else {
                 resp.render("./backend/blog/index", { title: "Blogs", blogs: blogs, currentUrl });
             }

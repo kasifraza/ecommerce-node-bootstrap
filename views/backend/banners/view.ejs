@@ -1,0 +1,41 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-4">
+                <h6><%= banner.title  %> </h6>
+            </div>
+            <div class="col-sm-8">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/banner/index">Banners</a></li>
+                    <li class="breadcrumb-item active"><%= title  %> </li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <a href="/admin/banner/update/<%= banner._id  %>" class="btn btn-primary">Edit</a>
+                    <a href="/admin/banner/delete/<%= banner._id  %>" class="btn btn-danger">Delete</a>
+                    <h2 class="mt-4"><%= banner.title  %> </h2>
+                    <hr />
+                    <p><b>Created Date:</b> <%= new Date(banner.createdAt)  %> </p>
+                    <hr />
+                    <p><b> Description:</b> <%- banner.description  %> </p>
+                    <hr />
+                    <p><b>Price:</b> $<%= parseFloat(banner.price).toFixed(2)  %> </p>
+                    <hr />
+                    <p><b>Link :</b> <%= banner.link %> </p>
+                    <hr />
+                    <img class="img-fluid rounded card-body shadow" src="/uploads/banners/<%= banner.image  %>" alt="<%= banner.title  %> " style="width: 200px;height: 200px;">
+                    <hr />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

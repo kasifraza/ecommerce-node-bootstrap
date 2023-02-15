@@ -1,0 +1,58 @@
+<style>
+    #additionalinfo img {
+        width: initial;
+    }
+</style>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-4">
+                <h6><%= product.title  %> </h6>
+            </div>
+            <div class="col-sm-8">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/product/index">Products</a></li>
+                    <li class="breadcrumb-item active"><%= title  %> </li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <a href="/admin/product/update/<%= product._id  %>" class="btn btn-primary">Edit</a>
+                    <a href="/admin/product/delete/<%= product._id  %>" class="btn btn-danger">Delete</a>
+                    <h2 class="mt-4"><%= product.title  %> </h2>
+                    <hr />
+                    <p><b>Created Date:</b> <%= new Date(product.created_on)  %> </p>
+                    <hr />
+                    <p class="card-body shadow"><b>Category:</b> <%= product.category.title  %> </p>
+                    <hr />
+                    <p><b>Short Description:</b> <%- product.description  %> </p>
+                    <hr />
+                    <p><b>Stock:</b> <%- (product.stock == true) ? '<span class="badge badge-info">In-Stock</span>' : '<span class="badge badge-warning">Out of Stock</span>'  %> </p>
+                    <hr />
+                    <p><b>Old Price:</b> $<%= parseFloat(product.oldprice).toFixed(2)  %> </p>
+                    <hr />
+                    <p><b>Current Price:</b> $<%= parseFloat(product.price).toFixed(2)  %> </p>
+                    <hr />
+                    <p><b>SKU :</b> <%- product.sku %> </p>
+                    <hr />
+                    <p  id="additionalinfo"><b>Additional Information :</b> <%- product.additional %> </p>
+                    <hr />
+                    <p><b>Description :</b> <%- product.description %> </p>
+                    <hr />
+                    <p><b>Status :</b> <%- (product.status == true) ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">In-Active</span>'  %> </p>
+                    <hr />
+                    <img class="img-fluid rounded card-body shadow" src="/uploads/<%= product.image  %>" alt="<%= product.title  %> " style="width: 200px;height: 200px;">
+                    <hr />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

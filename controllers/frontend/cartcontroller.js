@@ -6,6 +6,8 @@ const isLogged = require('../../middlewares/checkuser');
 const Address = require('../../models/backend/Address');
 const paypal = require('paypal-rest-sdk');
 const Transactions = require('../../models/backend/Transactions');
+const Order = require('../../models/backend/Order');
+const sendMail = require('../../helpers/orderConfirmMail');
 require('dotenv').config();
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
@@ -363,98 +365,212 @@ module.exports = {
       resp.redirect('/');
     }
   },
-  checkoutPost: async (req, resp) => {
-    if (req.body.oldaddress != '' && req.body.payment_method !== '') {
-      var addressId = req.body.oldaddress;
-      var productName = '';
-      var amount = 0;
-      var linequantity = 0;
-      var address = await Address.findById(addressId);
-      if (address && req.session.user._id) {
-        var cartItems = await Cart.find({ user: req.session.user._id });
-        if (cartItems) {
-          cartItems.forEach(item => {
-            var product = Product.findById(item.productId);
-            if (product) {
-              linequantity += item.quantity,
-                amount += (product.price * item.quantity),
-                productName += `${product.title} , `;
-            } else {
-              throw new Error('Internal Server Error')
+
+  // Paypal Checkout
+  checkoutPost: async (req, res, next) => {
+    try {
+      const { oldaddress, payment_method } = req.body;
+      if (oldaddress && payment_method) {
+        const address = await Address.findById(oldaddress);
+        const userId = req.session.user?._id;
+        if (address && userId) {
+          const cartItems = await Cart.find({ user: userId });
+          if (cartItems.length) {
+            let linequantity = 0;
+            let amount = 0;
+            let productName = '';
+            for (const item of cartItems) {
+              const product = await Product.findById(item.productId);
+              if (product) {
+                linequantity += item.quantity;
+                amount += product.price * item.quantity;
+                productName += `${product.title}, `;
+              } else {
+                req.session.message = {
+                  type: 'error',
+                  message: 'Product not found or some error occurred',
+                };
+                return res.redirect('/cart/checkout');
+              }
             }
-          });
-          var create_payment_json = {
-            "intent": "sale",
-            "payer": {
-              "payment_method": "paypal"
-            },
-            "redirect_urls": {
-              "return_url": "http://localhost:3000/cart/success",
-              "cancel_url": "http://localhost:3000/cart/cancel"
-            },
-            "transactions": [{
-              "item_list": {
-                "items": [{
-                  "name": `${productName} , `,
-                  "price": "1.00",
-                  "currency": "USD",
-                  "quantity": 1
-                }]
+            const createPaymentJson = {
+              intent: 'sale',
+              payer: { payment_method: 'paypal' },
+              redirect_urls: {
+                return_url: process.env.SUCCESS_URL,
+                cancel_url: process.env.CANCEL_URL,
               },
-              "amount": {
-                "currency": "USD",
-                "total": '1'
-              },
-              "description": "This is the payment description."
-            }]
-          };
+              transactions: [
+                {
+                  item_list: {
+                    items: [
+                      {
+                        name: productName.slice(0, -2),
+                        price: amount.toFixed(2),
+                        currency: 'USD',
+                        quantity: 1,
+                      },
+                    ],
+                  },
+                  amount: {
+                    currency: 'USD',
+                    total: amount.toFixed(2),
+                  },
+                  description: 'Payment description',
+                },
+              ],
+            };
+            paypal.payment.create(createPaymentJson, async (error, payment) => {
+              if (error) {
+                next(error);
+              } else {
 
+                const cartItems = await Cart.find({ user: userId });
+                const products = await Product.find({ _id: { $in: cartItems.map(item => item.productId) } });
+                const address = await Address.findById(req.body.oldaddress);
 
-          paypal.payment.create(create_payment_json, function (error, payment) {
-            if (error) {
-              throw error;
-            } else {
-              for (let i = 0; i < payment.links.length; i++) {
-                if (payment.links[i].rel === 'approval_url') {
-                  resp.redirect(payment.links[i].href);
+                const order = new Order({
+                  user: userId,
+                  address: address,
+                  products: products.map((product, index) => ({
+                    product: product,
+                    quantity: cartItems[index].quantity
+                  })),
+                  amount: payment.transactions[0].amount.total,
+                  paymentId: payment.id,
+                  status: 'pending'
+                });
+                await order.save();
+                const approvalUrl = payment.links.find(link => link.rel === 'approval_url')?.href;
+                if (approvalUrl) {
+                  res.redirect(approvalUrl);
+                } else {
+                  next(new Error('No approval URL found in payment response'));
                 }
               }
-              console.log("Create Payment Response");
-              console.log(payment);
-            }
-          });
+            });
+          } else {
+            req.session.message = {
+              type: 'error',
+              message: 'Cart is empty',
+            };
+            return res.redirect('/cart/checkout');
+          }
         } else {
-          throw new Error('Product Not Found or some error occured');
+          req.session.message = {
+            type: 'error',
+            message: 'Please log in and select a valid address',
+          };
+          return res.redirect('/cart/checkout');
         }
+      } else {
+        req.session.message = {
+          type: 'error',
+          message: 'Please provide an address and payment method',
+        };
+        return res.redirect('/cart/checkout');
       }
+    } catch (error) {
+      next(error);
     }
   },
-  success: (req, res) => {
+  success: async (req, res) => {
     const payerId = req.query.PayerID;
     const paymentId = req.query.paymentId;
+    const userId = req.session.user?._id;
+    const cartItems = await Cart.find({
+      user: userId
+    });
+    let linequantity = 0;
+    let amount = 0;
+    let productName = '';
+    for (const item of cartItems) {
+      const product = await Product.findById(item.productId);
+      if (product) {
+        linequantity += item.quantity;
+        amount += product.price * item.quantity;
+        productName += `${product.title}, `;
+      } else {
+        req.session.message = {
+          type: 'error',
+          message: 'Product not found or some error occurred',
+        };
+        return res.redirect('/cart/checkout');
+      }
+    }
+
     const execute_payment_json = {
       "payer_id": payerId,
       "transactions": [{
         "amount": {
           "currency": "USD",
-          "total": "1.00"
+          "total": amount.toFixed(2)
         }
       }]
     };
-    paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+    paypal.payment.execute(paymentId, execute_payment_json, async (error, payment) => {
       if (error) {
-        console.log(error.response);
-        throw error;
+        req.session.message = {
+          type: 'error',
+          message: 'Error occured while processing payment if your money got debited then it will be refunded within 2-3 working days.',
+        };
+        return res.redirect('/cart');
       } else {
-        // console.log(JSON.stringify(payment));
-        res.send(JSON.stringify(payment));
+        // Save the order and clear the cart
+        try {
+          const userId = req.session.user._id;
+          Order.findOne({
+            user: userId,
+            status: 'pending'
+          })
+            .sort({
+              '_id': -1
+            })
+            .limit(1)
+            .populate('products.product')
+            .populate('address')
+            .exec(async (err, order) => {
+              if (err) {
+                req.session.message = {
+                  type: 'error',
+                  message: 'May Your product got purchased but some error occured check your orders list or try to contact us',
+
+                };
+                return res.redirect('/cart');
+              }
+              order.status = 'Success';
+              order.payer = payment.payer;
+              order.transactions = payment.transactions;
+              order.invoice = order._id+'-invoice.pdf';
+              await order.save();
+              await Cart.deleteMany({
+                user: userId
+              });
+               sendMail(order);
+              // console.log(order.products)
+
+
+              req.session.message = {
+                type: 'success',
+                message: 'Payment successful, order placed successfully'
+              };
+              return res.render('./frontend/cart/success', { title: 'Order Placed', order });
+            });
+        } catch (error) {
+          req.session.message = {
+            type: 'error',
+            message: error.message || 'Internal Server Error'
+          };
+          return res.redirect('/cart');
+        }
       }
     });
-    // resp.send('success');
   },
   cancel: (req, resp) => {
-    return resp.send('Cancelled');
-  }
+    return resp.render('./frontend/cart/cancel',
+      { title: 'Order Cancelled' });
+
+  },
 
 
 }

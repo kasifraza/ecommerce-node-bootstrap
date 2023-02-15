@@ -1,108 +1,70 @@
-<div class="slider-banner-area padding-10-row-col">
-  <div class="custom-container">
-    <div class="row">
-      <div class="custom-common-column custom-column-width-66 custom-padding-5">
-        <div class="slider-area">
-          <div class="hero-slider-active-1 nav-style-1 nav-style-1-position-1">
-            <div
-              class="single-hero-slider single-animation-wrap slider-height-1 custom-d-flex custom-align-item-end bg-img"
-              style="background-image:url(/images/slider/hm1-slider-1.jpg);">
-              <div class="hero-slider-content-1 slider-animated-1">
-                <h1 class="animated">COVID-19 Prevention <br>& Care Supplies </h1>
-                <p class="animated">Collection of products that help you to protect you and your beloved. Take a good
-                  deal TODAY </p>
-                <div class="btn-style-1">
-                  <a class="animated" href="product-details.html"> Buy now </a>
-                </div>
-              </div>
-              <div class="slider-product-price slider-product-position1 slider-animated-1 animated">
-                <h3>
-                  <span>From</span>
-                  $5*
-                </h3>
-              </div>
-            </div>
-            <div class="single-hero-slider single-animation-wrap slider-height-1 custom-d-flex custom-align-item-end"
-              style="background-image:url(/images/slider/hm1-slider-2.jpg);">
-              <div class="hero-slider-content-1 slider-content-1-black slider-animated-1">
-                <h4 class="animated">Best selling </h4>
-                <h1 class="animated">COVID-19 Prevention <br>& Care Supplies </h1>
-                <p class="animated">Backed by experience since 1950. One-stop Source for all your Hospital & Medical
-                  Needs. </p>
-                <div class="btn-style-1">
-                  <a class="animated" href="product-details.html"> Buy now </a>
-                </div>
-              </div>
-              <div class="slider-product-price slider-product-position1 slider-animated-1 animated">
-                <h3>
-                  <span>From</span>
-                  $5*
-                </h3>
-              </div>
-            </div>
-            <div class="single-hero-slider single-animation-wrap slider-height-1 custom-d-flex custom-align-item-end"
-              style="background-image:url(/images/slider/hm1-slider-3.jpg);">
-              <div class="hero-slider-content-1 slider-animated-1">
-                <div class="slider-product-offer-wrap animated">
-                  <div class="slider-product-offer">
-                    <span class="yellow">hot </span>
-                    <span class="red">-28% </span>
+<% if(typeof banners != 'undefined' && banners.length > 0){ %> 
+  <div class="slider-banner-area padding-10-row-col">
+    <div class="custom-container">
+      <div class="row">
+        <div class="custom-common-column custom-column-width-66 custom-padding-5">
+          <div class="slider-area">
+            <div class="hero-slider-active-1 nav-style-1 nav-style-1-position-1">
+              <% banners.forEach(banner => { %>
+ 
+                <div class="single-hero-slider single-animation-wrap slider-height-1 custom-d-flex custom-align-item-end bg-img"
+                  style="background-image:url(/uploads/banners/<%= banner.image %>);">
+                  <div class="hero-slider-content-1 slider-animated-1">
+                    <h1 class="animated"><%= banner.title %> </h1>
+                    <p class="animated"><%- banner.description %> </p>
+                    <div class="btn-style-1">
+                      <a class="animated" href="<%= banner.link %>"> Buy now </a>
+                    </div>
                   </div>
-                  <p>3M 6000 Series </p>
+                  <div class="slider-product-price slider-product-position1 slider-animated-1 animated">
+                    <h3>
+                      <span>From</span>
+                      $<%= banner.price %>*
+                    </h3>
+                  </div>
                 </div>
-                <h1 class="animated">Fitted Face Mask N95<br> Group Pack of 3 </h1>
-                <p class="animated">3M high-efficiency electrostatic filter cotton, non-oily particle filtration
-                  efficiency ≥ 90% </p>
-                <div class="btn-style-1">
-                  <a class="animated" href="product-details.html"> Buy now </a>
-                </div>
-              </div>
-              <div class="slider-product-price slider-product-position2 slider-animated-1 animated">
-                <h3>
-                  <span>Only </span>
-                  $18
-                </h3>
-              </div>
+                
+              <% }) %>
             </div>
           </div>
         </div>
-      </div>
-      <div class="custom-common-column custom-column-width-33 custom-padding-5">
-        <div class="banner-area banner-area-mt">
-          <div class="row">
-            <div class="col-xl-12 col-lg-6 col-md-6 col-12 col-sm-12">
-              <div class="banner-wrap wow tmFadeInUp mb-10">
-                <div class="banner-img banner-img-zoom">
-                  <a href="product-details.html"><img src="/images/banner/banner-1.jpg" alt=""></a>
-                </div>
-                <div class="banner-content-1">
-                  <span>Home Medical Supplies</span>
-                  <h2>Portable Mesh Atomizer</h2>
-                  <h3>$40.00</h3>
-                  <div class="btn-style-1">
-                    <a class="font-size-14 btn-1-padding-2" href="product-details.html">Shop now </a>
+        <div class="custom-common-column custom-column-width-33 custom-padding-5">
+          <div class="banner-area banner-area-mt">
+            <div class="row">
+              <div class="col-xl-12 col-lg-6 col-md-6 col-12 col-sm-12">
+                <div class="banner-wrap wow tmFadeInUp mb-10">
+                  <div class="banner-img banner-img-zoom">
+                    <a href="product-details.html"><img src="/images/banner/banner-1.jpg" alt=""></a>
+                  </div>
+                  <div class="banner-content-1">
+                    <span>Home Medical Supplies</span>
+                    <h2>Portable Mesh Atomizer</h2>
+                    <h3>$40.00</h3>
+                    <div class="btn-style-1">
+                      <a class="font-size-14 btn-1-padding-2" href="product-details.html">Shop now </a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-xl-12 col-lg-6 col-md-6 col-12 col-sm-12">
-              <div class="banner-wrap wow tmFadeInUp mb-10">
-                <div class="banner-img banner-img-zoom">
-                  <a href="product-details.html"><img src="/images/banner/banner-2.jpg" alt=""></a>
-                </div>
-                <div class="banner-content-1">
-                  <span>Home Medical Supplies</span>
-                  <h2>Sanitizer Gel Alcohol</h2>
-                  <h3>$15.00</h3>
-                  <div class="btn-style-1">
-                    <a class="font-size-14 btn-1-padding-2" href="product-details.html">Shop now </a>
+              <div class="col-xl-12 col-lg-6 col-md-6 col-12 col-sm-12">
+                <div class="banner-wrap wow tmFadeInUp mb-10">
+                  <div class="banner-img banner-img-zoom">
+                    <a href="product-details.html"><img src="/images/banner/banner-2.jpg" alt=""></a>
                   </div>
-                </div>
-                <div class="banner-badge banner-badge-position1">
-                  <h3>
-                    <span>Best</span>
-                    Selling
-                  </h3>
+                  <div class="banner-content-1">
+                    <span>Home Medical Supplies</span>
+                    <h2>Sanitizer Gel Alcohol</h2>
+                    <h3>$15.00</h3>
+                    <div class="btn-style-1">
+                      <a class="font-size-14 btn-1-padding-2" href="product-details.html">Shop now </a>
+                    </div>
+                  </div>
+                  <div class="banner-badge banner-badge-position1">
+                    <h3>
+                      <span>Best</span>
+                      Selling
+                    </h3>
+                  </div>
                 </div>
               </div>
             </div>
@@ -111,39 +73,137 @@
       </div>
     </div>
   </div>
-</div>
-<div class="product-area pt-80 pb-75">
-  <div class="custom-container">
-    <div class="product-area-border">
-      <div class="section-title-timer-wrap">
+<% } %> 
+<% if(typeof dealsProducts != 'undefined' && dealsProducts.length > 0){ %> 
+  <div class="product-area pt-80 pb-75">
+    <div class="custom-container">
+      <div class="product-area-border">
+        <div class="section-title-timer-wrap">
+          <div class="section-title-1">
+            <h2>Daily Deal Of The Day</h2>
+          </div>
+          <div id="timer-1-active" class="timer-style-1">
+            <span>End in:</span>
+            <div data-countdown="2009/12/30"></div>
+          </div>
+        </div>
+        <div class="product-slider-active-1 nav-style-2 product-hm1-mrg">
+          <% dealsProducts.forEach(deal => { %>
+           
+            <div class="product-plr-1">
+              <div class="single-product-wrap">
+                <div class="product-badges product-badges-mrg">
+                  <% var discount = Number(deal.oldprice) %> 
+                  <span class="discount red">-<%=  Math.round(((deal.oldprice - deal.price) / deal.oldprice) * 100) %>% </span>
+                </div>
+                <div class="product-content-wrap">
+                  <div class="product-category">
+                    <a href="<%= `/shop/category/${deal.category.slug}` %>"><%= deal.category.title %></a>
+                  </div>
+                  <h2><a href="<%= `/shop/product/${deal.slug}` %>"><%= deal.title %> </a></h2>
+                  <div class="product-price">
+                    <span class="new-price"><%= '$'+parseFloat(deal.price).toFixed(2) %> </span>
+                    <span class="old-price"><%= '$'+parseFloat(deal.oldprice).toFixed(2) %> </span>
+                  </div>
+                </div>
+                <div class="product-img-action-wrap mb-20 mt-25">
+                  <div class="product-img product-img-zoom">
+                    <a href="<%= `/shop/product/${deal.slug}` %>">
+                      <img class="default-img" src="<%= `/uploads/${deal.image}` %>" alt="">
+                    </a>
+                  </div>
+                  <div class="product-action-1">
+                    <button aria-label="Add To Cart" onclick="addToCart('<%= deal._id %>')"><i class="far fa-shopping-bag"></i></button>
+                    <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
+                    <button aria-label="Compare"><i class="far fa-signal"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% } %> 
+<% if(typeof ctas != 'undefined' && ctas.length > 0) { %> 
+  <div class="banner-area pb-40">
+    <div class="custom-container">
+      <div class="row">
+        <% ctas.forEach(cta => { %>
+         
+          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+            <div class="banner-wrap wow tmFadeInUp mb-30">
+              <div class="banner-img banner-img-zoom">
+                <a href="<%= cta.link  %>"><img src="<%= `/uploads/cta/${cta.image}` %>" alt=""></a>
+              </div>
+              <div class="banner-content-1">
+                <span><%= cta.subtitle %></span>
+                <h2><%= cta.title %></h2>
+                <h3>$<%= parseFloat(cta.price).toFixed(2) %></h3>
+                <div class="btn-style-1">
+                  <a class="font-size-14 btn-1-padding-2" href="<%= cta.link %>">Shop now </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <% }) %>
+      </div>
+    </div>
+  </div>
+<% } %> 
+<% if(typeof shopByCategories != 'undefined' && shopByCategories.length > 0 ){ %> 
+  <div class="categories-area pb-70">
+    <div class="custom-container">
+      <div class="section-title-1 mb-40">
+        <h2>Shop by categories</h2>
+      </div>
+      <div class="categories-slider-1 wow tmFadeInUp">
+        <% shopByCategories.forEach(category => { %>
+         
+          <div class="product-plr-1">
+            <div class="categories-wrap">
+              <div class="categories-img categories-img-zoom">
+                <a href="<%= `/shop/category/${category.slug}` %>"><img src="<%= `/uploads/${category.image}` %>" alt=""></a>
+              </div>
+              <div class="categories-content text-center">
+                <h3><a href="<%= `/shop/category/${category.slug}` %>"><%= category.title %></a></h3>
+              </div>
+            </div>
+          </div>
+
+        <% }) %>
+      </div>
+    </div>
+  </div>
+<% } %> 
+<% if(typeof hotItems != 'undefined' && hotItems.length > 0){ %> 
+  <div class="product-area pb-70">
+    <div class="custom-container">
+      <div class="section-title-btn-wrap mb-35">
         <div class="section-title-1">
-          <h2>Daily Deal Of The Day</h2>
+          <h2>Hot items</h2>
         </div>
-        <div id="timer-1-active" class="timer-style-1">
-          <span>End in:</span>
-          <div data-countdown="2021/8/30"></div>
+        <div class="btn-style-2">
+          <a href="#">View all products <i class="far fa-long-arrow-right"></i></a>
         </div>
       </div>
-      <div class="product-slider-active-1 nav-style-2 product-hm1-mrg">
+      <div class="product-slider-active-1 nav-style-2 nav-style-2-modify-2">
+        <% hotItems.forEach(hot => { %>
+         
         <div class="product-plr-1">
           <div class="single-product-wrap">
-            <div class="product-badges product-badges-mrg">
-              <span class="discount red">-26%</span>
-            </div>
-            <div class="product-content-wrap">
-              <div class="product-category">
-                <a href="shop.html">Personal</a>
-              </div>
-              <h2><a href="product-details.html">Disposable Hand Wash Gel</a></h2>
-              <div class="product-price">
-                <span class="new-price">$20.00</span>
-                <span class="old-price">$27.00</span>
-              </div>
-            </div>
-            <div class="product-img-action-wrap mb-20 mt-25">
+            <div class="product-img-action-wrap mb-20">
               <div class="product-img product-img-zoom">
-                <a href="product-details.html">
-                  <img class="default-img" src="/images/product/product-1.jpg" alt="">
+                <a href="<%= `/shop/product/${hot.slug}` %>">
+                  <img class="default-img" src="<%= `/uploads/${hot.image}` %>" alt="">
+                  <% if(hot.images.length > 0){ %> 
+                  <img class="hover-img" src="<%= `/uploads/products/${hot.images[0]}` %>" alt="">
+                  <% }else{ %> 
+                    <img class="hover-img" src="<%= `/uploads/${hot.image}` %>" alt="">
+                  <% } %> 
                 </a>
               </div>
               <div class="product-action-1">
@@ -151,590 +211,41 @@
                 <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
                 <button aria-label="Compare"><i class="far fa-signal"></i></button>
               </div>
-            </div>
-            <div class="product-stock">
-              <div class="status-bar">
-                <div class="sold-bar sold-bar-width-33"></div>
+              <div class="product-badges product-badges-position product-badges-mrg">
+                <span class="hot yellow">Hot</span>
               </div>
-              <div class="product-stock-status">
-                <div class="sold stock-status-same-style">
-                  <span class="label">Sold: </span>
-                  <span class="value">4</span>
-                </div>
-                <div class="available stock-status-same-style">
-                  <span class="label">Available: </span>
-                  <span class="value">2</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="product-plr-1">
-          <div class="single-product-wrap">
-            <div class="product-badges product-badges-mrg">
-              <span class="hot yellow">Hot</span>
-              <span class="discount red">-38%</span>
             </div>
             <div class="product-content-wrap">
               <div class="product-category">
-                <a href="shop.html">Hospital Equipment</a>
+                <a href="<%= `/shop/category/${hot.category.slug}` %>"><%= hot.category.ttitle %></a>
               </div>
-              <h2><a href="product-details.html">Surgical Latex Gloves</a></h2>
+              <h2><a href="<%= `/shop/product/${hot.slug}` %>"><%= hot.title %></a></h2>
               <div class="product-price">
-                <span class="new-price">$10.00</span>
-                <span class="old-price">$16.00</span>
-              </div>
-            </div>
-            <div class="product-img-action-wrap mb-20 mt-25">
-              <div class="product-img product-img-zoom">
-                <a href="product-details.html">
-                  <img class="default-img" src="/images/product/product-2.jpg" alt="">
-                  <img class="hover-img" src="/images/product/product-2-2.jpg" alt="">
-                </a>
-              </div>
-              <div class="product-action-1">
-                <button aria-label="Add To Cart"><i class="far fa-shopping-bag"></i></button>
-                <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
-                <button aria-label="Compare"><i class="far fa-signal"></i></button>
-              </div>
-            </div>
-            <div class="product-stock">
-              <div class="status-bar">
-                <div class="sold-bar sold-bar-width-40"></div>
-              </div>
-              <div class="product-stock-status">
-                <div class="sold stock-status-same-style">
-                  <span class="label">Sold: </span>
-                  <span class="value">18</span>
-                </div>
-                <div class="available stock-status-same-style">
-                  <span class="label">Available: </span>
-                  <span class="value">12</span>
-                </div>
+                <span>$<%= parseFloat(hot.price).toFixed(2) %> - $<%= parseFloat(hot.oldprice).toFixed(2) %> </span>
               </div>
             </div>
           </div>
         </div>
-        <div class="product-plr-1">
-          <div class="single-product-wrap">
-            <div class="product-badges product-badges-mrg">
-              <span class="hot yellow">Hot</span>
-              <span class="discount red">-20%</span>
-            </div>
-            <div class="product-content-wrap">
-              <div class="product-category">
-                <a href="shop.html">Hospital Equipment</a>
-              </div>
-              <h2><a href="product-details.html">Manual Oxygen Device</a></h2>
-              <div class="product-price">
-                <span class="new-price">$12.00</span>
-                <span class="old-price">$16.00</span>
-              </div>
-            </div>
-            <div class="product-img-action-wrap mb-20 mt-25">
-              <div class="product-img product-img-zoom">
-                <a href="product-details.html">
-                  <img class="default-img" src="/images/product/product-3.jpg" alt="">
-                </a>
-              </div>
-              <div class="product-action-1">
-                <button aria-label="Add To Cart"><i class="far fa-shopping-bag"></i></button>
-                <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
-                <button aria-label="Compare"><i class="far fa-signal"></i></button>
-              </div>
-            </div>
-            <div class="product-stock">
-              <div class="status-bar">
-                <div class="sold-bar sold-bar-width-10"></div>
-              </div>
-              <div class="product-stock-status">
-                <div class="sold stock-status-same-style">
-                  <span class="label">Sold: </span>
-                  <span class="value">9</span>
-                </div>
-                <div class="available stock-status-same-style">
-                  <span class="label">Available: </span>
-                  <span class="value">1</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="product-plr-1">
-          <div class="single-product-wrap">
-            <div class="product-badges product-badges-mrg">
-              <span class="discount red">-30%</span>
-            </div>
-            <div class="product-content-wrap">
-              <div class="product-category">
-                <a href="shop.html">Hospital Equipment</a>
-              </div>
-              <h2><a href="product-details.html">12-Ply Gauze Sponges</a></h2>
-              <div class="product-price">
-                <span class="new-price">$7.00</span>
-                <span class="old-price">$10.00</span>
-              </div>
-            </div>
-            <div class="product-img-action-wrap mb-20 mt-25">
-              <div class="product-img product-img-zoom">
-                <a href="product-details.html">
-                  <img class="default-img" src="/images/product/product-4.jpg" alt="">
-                  <img class="hover-img" src="/images/product/product-4-2.jpg" alt="">
-                </a>
-              </div>
-              <div class="product-action-1">
-                <button aria-label="Add To Cart"><i class="far fa-shopping-bag"></i></button>
-                <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
-                <button aria-label="Compare"><i class="far fa-signal"></i></button>
-              </div>
-            </div>
-            <div class="product-stock">
-              <div class="status-bar">
-                <div class="sold-bar sold-bar-width-6"></div>
-              </div>
-              <div class="product-stock-status">
-                <div class="sold stock-status-same-style">
-                  <span class="label">Sold: </span>
-                  <span class="value">14</span>
-                </div>
-                <div class="available stock-status-same-style">
-                  <span class="label">Available: </span>
-                  <span class="value">1</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="product-plr-1">
-          <div class="single-product-wrap">
-            <div class="product-badges product-badges-mrg">
-              <span class="discount red">-17%</span>
-            </div>
-            <div class="product-content-wrap">
-              <div class="product-category">
-                <a href="shop.html">Hospital Equipment</a>
-              </div>
-              <h2><a href="product-details.html">Cara Portable Air Compressor</a></h2>
-              <div class="product-price">
-                <span class="new-price">$120.00</span>
-                <span class="old-price">$145.00</span>
-              </div>
-            </div>
-            <div class="product-img-action-wrap mb-20 mt-25">
-              <div class="product-img product-img-zoom">
-                <a href="product-details.html">
-                  <img class="default-img" src="/images/product/product-5.jpg" alt="">
-                </a>
-              </div>
-              <div class="product-action-1">
-                <button aria-label="Add To Cart"><i class="far fa-shopping-bag"></i></button>
-                <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
-                <button aria-label="Compare"><i class="far fa-signal"></i></button>
-              </div>
-            </div>
-            <div class="product-stock">
-              <div class="status-bar">
-                <div class="sold-bar sold-bar-width-42"></div>
-              </div>
-              <div class="product-stock-status">
-                <div class="sold stock-status-same-style">
-                  <span class="label">Sold: </span>
-                  <span class="value">4</span>
-                </div>
-                <div class="available stock-status-same-style">
-                  <span class="label">Available: </span>
-                  <span class="value">2</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="product-plr-1">
-          <div class="single-product-wrap">
-            <div class="product-badges product-badges-mrg">
-              <span class="discount red">-38%</span>
-            </div>
-            <div class="product-content-wrap">
-              <div class="product-category">
-                <a href="shop.html">Hospital Equipment</a>
-              </div>
-              <h2><a href="product-details.html">Manual Oxygen Device</a></h2>
-              <div class="product-price">
-                <span class="new-price">$12.00</span>
-                <span class="old-price">$15.00</span>
-              </div>
-            </div>
-            <div class="product-img-action-wrap mb-20 mt-25">
-              <div class="product-img product-img-zoom">
-                <a href="product-details.html">
-                  <img class="default-img" src="/images/product/product-2.jpg" alt="">
-                  <img class="hover-img" src="/images/product/product-2-2.jpg" alt="">
-                </a>
-              </div>
-              <div class="product-action-1">
-                <button aria-label="Add To Cart"><i class="far fa-shopping-bag"></i></button>
-                <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
-                <button aria-label="Compare"><i class="far fa-signal"></i></button>
-              </div>
-            </div>
-            <div class="product-stock">
-              <div class="status-bar">
-                <div class="sold-bar sold-bar-width-40"></div>
-              </div>
-              <div class="product-stock-status">
-                <div class="sold stock-status-same-style">
-                  <span class="label">Sold: </span>
-                  <span class="value">9</span>
-                </div>
-                <div class="available stock-status-same-style">
-                  <span class="label">Available: </span>
-                  <span class="value">1</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+        <% }) %>
       </div>
     </div>
   </div>
-</div>
-<div class="banner-area pb-40">
-  <div class="custom-container">
-    <div class="row">
-      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-        <div class="banner-wrap wow tmFadeInUp mb-30">
-          <div class="banner-img banner-img-zoom">
-            <a href="product-details.html"><img src="/images/banner/banner-3.jpg" alt=""></a>
-          </div>
-          <div class="banner-content-1">
-            <span>Personal</span>
-            <h2>Temperature Gun</h2>
-            <h3>$35.00</h3>
-            <div class="btn-style-1">
-              <a class="font-size-14 btn-1-padding-2" href="product-details.html">Shop now </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-        <div class="banner-wrap wow tmFadeInUp mb-30">
-          <div class="banner-img banner-img-zoom">
-            <a href="product-details.html"><img src="/images/banner/banner-4.jpg" alt=""></a>
-          </div>
-          <div class="banner-content-1">
-            <span>Home Medical Supplies</span>
-            <h2>Steam Vaporizer</h2>
-            <h3>$86.00</h3>
-            <div class="btn-style-1">
-              <a class="font-size-14 btn-1-padding-2" href="product-details.html">Shop now </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-        <div class="banner-wrap wow tmFadeInUp mb-30">
-          <div class="banner-img banner-img-zoom">
-            <a href="product-details.html"><img src="/images/banner/banner-5.jpg" alt=""></a>
-          </div>
-          <div class="banner-content-1">
-            <span>Hospital Equipment</span>
-            <h2>Stainless Steel Scissors</h2>
-            <h3>$13.00</h3>
-            <div class="btn-style-1">
-              <a class="font-size-14 btn-1-padding-2" href="product-details.html">Shop now </a>
-            </div>
-          </div>
-          <div class="banner-badge banner-badge-position2">
-            <h3>
-              <span>19%</span>
-              Off
-            </h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="categories-area pb-70">
-  <div class="custom-container">
-    <div class="section-title-1 mb-40">
-      <h2>Shop by categories</h2>
-    </div>
-    <div class="categories-slider-1 wow tmFadeInUp">
-      <div class="product-plr-1">
-        <div class="categories-wrap">
-          <div class="categories-img categories-img-zoom">
-            <a href="shop.html"><img src="/images/product/categorie-1.jpg" alt=""></a>
-          </div>
-          <div class="categories-content text-center">
-            <h3><a href="shop.html">Hospital Equipment</a></h3>
-          </div>
-        </div>
-      </div>
-      <div class="product-plr-1">
-        <div class="categories-wrap">
-          <div class="categories-img categories-img-zoom">
-            <a href="shop.html"><img src="/images/product/categorie-2.png" alt=""></a>
-          </div>
-          <div class="categories-content text-center">
-            <h3><a href="shop.html">Blood Pressure</a></h3>
-          </div>
-        </div>
-      </div>
-      <div class="product-plr-1">
-        <div class="categories-wrap">
-          <div class="categories-img categories-img-zoom">
-            <a href="shop.html"><img src="/images/product/categorie-3.jpg" alt=""></a>
-          </div>
-          <div class="categories-content text-center">
-            <h3><a href="shop.html">Accessories</a></h3>
-          </div>
-        </div>
-      </div>
-      <div class="product-plr-1">
-        <div class="categories-wrap">
-          <div class="categories-img categories-img-zoom">
-            <a href="shop.html"><img src="/images/product/categorie-4.jpg" alt=""></a>
-          </div>
-          <div class="categories-content text-center">
-            <h3><a href="shop.html">Personal</a></h3>
-          </div>
-        </div>
-      </div>
-      <div class="product-plr-1">
-        <div class="categories-wrap">
-          <div class="categories-img categories-img-zoom">
-            <a href="shop.html"><img src="/images/product/categorie-5.jpg" alt=""></a>
-          </div>
-          <div class="categories-content text-center">
-            <h3><a href="shop.html">Independent Living</a></h3>
-          </div>
-        </div>
-      </div>
-      <div class="product-plr-1">
-        <div class="categories-wrap">
-          <div class="categories-img categories-img-zoom">
-            <a href="shop.html"><img src="/images/product/categorie-6.jpg" alt=""></a>
-          </div>
-          <div class="categories-content text-center">
-            <h3><a href="shop.html">Pharmacy</a></h3>
-          </div>
-        </div>
-      </div>
-      <div class="product-plr-1">
-        <div class="categories-wrap">
-          <div class="categories-img categories-img-zoom">
-            <a href="shop.html"><img src="/images/product/categorie-2.png" alt=""></a>
-          </div>
-          <div class="categories-content text-center">
-            <h3><a href="shop.html">Blood Pressure</a></h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="product-area pb-70">
-  <div class="custom-container">
-    <div class="section-title-btn-wrap mb-35">
-      <div class="section-title-1">
-        <h2>Hot items</h2>
-      </div>
-      <div class="btn-style-2">
-        <a href="#">View all products <i class="far fa-long-arrow-right"></i></a>
-      </div>
-    </div>
-    <div class="product-slider-active-1 nav-style-2 nav-style-2-modify-2">
-      <div class="product-plr-1">
-        <div class="single-product-wrap">
-          <div class="product-img-action-wrap mb-20">
-            <div class="product-img product-img-zoom">
-              <a href="product-details.html">
-                <img class="default-img" src="/images/product/product-7.jpg" alt="">
-                <img class="hover-img" src="/images/product/product-7-2.jpg" alt="">
-              </a>
-            </div>
-            <div class="product-action-1">
-              <button aria-label="Add To Cart"><i class="far fa-shopping-bag"></i></button>
-              <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
-              <button aria-label="Compare"><i class="far fa-signal"></i></button>
-            </div>
-            <div class="product-badges product-badges-position product-badges-mrg">
-              <span class="hot yellow">Hot</span>
-            </div>
-          </div>
-          <div class="product-content-wrap">
-            <div class="product-category">
-              <a href="shop.html">Hospital Equipment</a>
-            </div>
-            <h2><a href="product-details.html">Essentials Pocket Scrub</a></h2>
-            <div class="product-price">
-              <span>$30.00 - $32.00 </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-plr-1">
-        <div class="single-product-wrap">
-          <div class="product-img-action-wrap mb-20">
-            <div class="product-img product-img-zoom">
-              <a href="product-details.html">
-                <img class="default-img" src="/images/product/product-8.jpg" alt="">
-                <img class="hover-img" src="/images/product/product-8-2.jpg" alt="">
-              </a>
-            </div>
-            <div class="product-action-1">
-              <button aria-label="Add To Cart"><i class="far fa-shopping-bag"></i></button>
-              <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
-              <button aria-label="Compare"><i class="far fa-signal"></i></button>
-            </div>
-            <div class="product-badges product-badges-position product-badges-mrg">
-              <span class="hot yellow">Hot</span>
-            </div>
-          </div>
-          <div class="product-content-wrap">
-            <div class="product-category">
-              <a href="shop.html">Hospital Equipment</a>
-            </div>
-            <h2><a href="product-details.html">Men V-Neck Scrub Top</a></h2>
-            <div class="product-price">
-              <span>$25.00 - $27.00 </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-plr-1">
-        <div class="single-product-wrap">
-          <div class="product-img-action-wrap mb-20">
-            <div class="product-img product-img-zoom">
-              <a href="product-details.html">
-                <img class="default-img" src="/images/product/product-9.jpg" alt="">
-                <img class="hover-img" src="/images/product/product-9-2.jpg" alt="">
-              </a>
-            </div>
-            <div class="product-action-1">
-              <button aria-label="Add To Cart"><i class="far fa-shopping-bag"></i></button>
-              <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
-              <button aria-label="Compare"><i class="far fa-signal"></i></button>
-            </div>
-            <div class="product-badges product-badges-position product-badges-mrg">
-              <span class="hot yellow">Hot</span>
-            </div>
-          </div>
-          <div class="product-content-wrap">
-            <div class="product-category">
-              <a href="shop.html">Independent Living</a>
-            </div>
-            <h2><a href="product-details.html">Deluxe Folding Walker Silver</a></h2>
-            <div class="product-price">
-              <span>$42.00 </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-plr-1">
-        <div class="single-product-wrap">
-          <div class="product-img-action-wrap mb-20">
-            <div class="product-img product-img-zoom">
-              <a href="product-details.html">
-                <img class="default-img" src="/images/product/product-3.jpg" alt="">
-              </a>
-            </div>
-            <div class="product-action-1">
-              <button aria-label="Add To Cart"><i class="far fa-shopping-bag"></i></button>
-              <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
-              <button aria-label="Compare"><i class="far fa-signal"></i></button>
-            </div>
-            <div class="product-badges product-badges-position product-badges-mrg">
-              <span class="hot yellow">Hot</span>
-              <span class="discount red">-20%</span>
-            </div>
-          </div>
-          <div class="product-content-wrap">
-            <div class="product-category">
-              <a href="shop.html">Hospital Equipment</a>
-            </div>
-            <h2><a href="product-details.html">Manual Oxygen Device</a></h2>
-            <div class="product-price">
-              <span>$30.00 - $32.00 </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-plr-1">
-        <div class="single-product-wrap">
-          <div class="product-img-action-wrap mb-20">
-            <div class="product-img product-img-zoom">
-              <a href="product-details.html">
-                <img class="default-img" src="/images/product/product-10.jpg" alt="">
-              </a>
-            </div>
-            <div class="product-action-1">
-              <button aria-label="Add To Cart"><i class="far fa-shopping-bag"></i></button>
-              <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
-              <button aria-label="Compare"><i class="far fa-signal"></i></button>
-            </div>
-            <div class="product-badges product-badges-position product-badges-mrg">
-              <span class="hot yellow">Hot</span>
-            </div>
-          </div>
-          <div class="product-content-wrap">
-            <div class="product-category">
-              <a href="shop.html">Hospital Equipment</a>
-            </div>
-            <h2><a href="product-details.html">Drive Medical Removable Top</a></h2>
-            <div class="product-price">
-              <span>$15.00 </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product-plr-1">
-        <div class="single-product-wrap">
-          <div class="product-img-action-wrap mb-20">
-            <div class="product-img product-img-zoom">
-              <a href="product-details.html">
-                <img class="default-img" src="/images/product/product-6.jpg" alt="">
-                <img class="hover-img" src="/images/product/product-6-2.jpg" alt="">
-              </a>
-            </div>
-            <div class="product-action-1">
-              <button aria-label="Add To Cart"><i class="far fa-shopping-bag"></i></button>
-              <button aria-label="Add To Wishlist"><i class="far fa-heart"></i></button>
-              <button aria-label="Compare"><i class="far fa-signal"></i></button>
-            </div>
-            <div class="product-badges product-badges-position product-badges-mrg">
-              <span class="hot yellow">Hot</span>
-            </div>
-          </div>
-          <div class="product-content-wrap">
-            <div class="product-category">
-              <a href="shop.html">Hospital Equipment</a>
-            </div>
-            <h2><a href="product-details.html">Essentials Pocket Scrub</a></h2>
-            <div class="product-price">
-              <span>$30.00 - $32.00 </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<% } %> 
 <div class="banner-area pb-45">
   <div class="custom-container">
     <div class="row">
       <div class="col-lg-8">
         <div class="banner-wrap wow tmFadeInUp mb-30">
           <div class="banner-img banner-img-zoom">
-            <a href="product-details.html"><img src="/images/banner/banner-6.jpg" alt=""></a>
+            <a href="/shop"><img src="/images/banner/banner-6.jpg" alt=""></a>
           </div>
           <div class="banner-content-2">
             <h2>Independent Living</h2>
             <h3 class="d-none d-sm-block">Classic Personal Vaporizer</h3>
             <h4>$35.00</h4>
             <div class="btn-style-1">
-              <a class="font-size-14 btn-1-padding-2" href="product-details.html">Shop now </a>
+              <a class="font-size-14 btn-1-padding-2" href="/shop">Shop now </a>
             </div>
           </div>
           <div class="banner-badge-2 banner-badge-2-position1">
@@ -748,14 +259,14 @@
       <div class="col-lg-4">
         <div class="banner-wrap wow tmFadeInUp mb-30">
           <div class="banner-img banner-img-zoom">
-            <a href="product-details.html"><img src="/images/banner/banner-7.jpg" alt=""></a>
+            <a href="/shop"><img src="/images/banner/banner-7.jpg" alt=""></a>
           </div>
           <div class="banner-content-3">
             <span>Home Medical Supplies</span>
             <h2>Digital Thermometer</h2>
             <h4>$45.00 - $55.00</h4>
             <div class="btn-style-1">
-              <a class="font-size-14 btn-1-padding-2" href="product-details.html">Shop now </a>
+              <a class="font-size-14 btn-1-padding-2" href="/shop">Shop now </a>
             </div>
           </div>
         </div>
@@ -763,133 +274,60 @@
     </div>
   </div>
 </div>
-<div class="brand-logo-area pb-35">
-  <div class="custom-container">
-    <div class="section-title-1 wow tmFadeInUp mb-30">
-      <h2>Shop by brands</h2>
-    </div>
-    <div class="row align-items-center wow tmFadeInUp">
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-1.png" alt=""></a>
-        </div>
+
+<% if(typeof brands != 'undefined' && brands.length > 0){ %> 
+
+  <div class="brand-logo-area pb-35">
+    <div class="custom-container">
+      <div class="section-title-1 wow tmFadeInUp mb-30">
+        <h2>Shop by brands</h2>
       </div>
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-2.png" alt=""></a>
+      <div class="row align-items-center wow tmFadeInUp">
+        <% brands.forEach(brand => { %>
+         
+        <div class="col-lg-2 col-md-4 col-6 col-sm-4">
+          <div class="single-brand-logo mb-30">
+            <a href="/shop"><img src="/uploads/brands/<%= brand.image %>" alt=""></a>
+          </div>
         </div>
-      </div>
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-3.png" alt=""></a>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-4.png" alt=""></a>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-5.png" alt=""></a>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-6.png" alt=""></a>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-7.png" alt=""></a>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-8.png" alt=""></a>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-9.png" alt=""></a>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-10.png" alt=""></a>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-11.png" alt=""></a>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-4 col-6 col-sm-4">
-        <div class="single-brand-logo mb-30">
-          <a href="shop.html"><img src="/images/brand-logo/brand-logo-12.png" alt=""></a>
-        </div>
+        
+        <% }) %>
       </div>
     </div>
   </div>
-</div>
-<div class="testimonial-area pb-75">
-  <div class="custom-container">
-    <div class="section-title-btn-wrap mb-35">
-      <div class="section-title-1">
-        <h2>We love our clients</h2>
-      </div>
-      <div class="btn-style-2 mrg-top-xs">
-        <a href="#">View all reviews <i class="far fa-long-arrow-right"></i></a>
-      </div>
-    </div>
-    <div class="testimonial-active-1 wow tmFadeInUp nav-style-2 nav-style-2-modify-1">
-      <div class="testimonial-plr-1">
-        <div class="single-testimonial">
-          <h4>Great quality!</h4>
-          <p> This is a great design and I hope that we will create a website with a good signature. ThemeMove team is
-            reactive and kind. Thanks for the help so far.</p>
-          <div class="client-info">
-            <h5>Luke Olfert</h5>
-            <span>/ Web Developer, Canada</span>
-          </div>
+
+<% } %> 
+
+<% if(typeof testimonials != 'undefined' && testimonials.length > 0 ){ %> 
+  <div class="testimonial-area pb-75">
+    <div class="custom-container">
+      <div class="section-title-btn-wrap mb-35">
+        <div class="section-title-1">
+          <h2>We love our clients</h2>
+        </div>
+        <div class="btn-style-2 mrg-top-xs">
+          <a href="#">View all reviews <i class="far fa-long-arrow-right"></i></a>
         </div>
       </div>
-      <div class="testimonial-plr-1">
-        <div class="single-testimonial">
-          <h4>My luck</h4>
-          <p> Before my purchase, I had a look of many other themes & clubs that are available out there. So, ThemeMove
-            is just good luck for me. 5-star rating deserved.</p>
-          <div class="client-info">
-            <h5>Ryan Teixeira</h5>
-            <span>/ Designer, UK</span>
+      <div class="testimonial-active-1 wow tmFadeInUp nav-style-2 nav-style-2-modify-1">
+        <% testimonials.forEach(testimonial => { %>
+         
+          <div class="testimonial-plr-1">
+            <div class="single-testimonial">
+              <h4><%= testimonial.title %></h4>
+              <%- testimonial.description %> 
+              <div class="client-info">
+                <h5><%= testimonial.name %></h5>
+                <span><%= testimonial.designation %></span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="testimonial-plr-1">
-        <div class="single-testimonial">
-          <h4>No coding Require</h4>
-          <p> Very prompt, and fixed the problem within a day of submitting a ticket. I just started to use WordPress,
-            and I absolutely love ThemeMove's themes</p>
-          <div class="client-info">
-            <h5>Daniel Pereira</h5>
-            <span>/ Marketer, France </span>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-plr-1">
-        <div class="single-testimonial">
-          <h4>My luck</h4>
-          <p> Before my purchase, I had a look of many other themes & clubs that are available out there. So, ThemeMove
-            is just good luck for me. 5-star rating deserved.</p>
-          <div class="client-info">
-            <h5>Ryan Teixeira</h5>
-            <span>/ Designer, UK</span>
-          </div>
-        </div>
+        
+        <% }) %>
       </div>
     </div>
   </div>
-</div>
+<% } %> 
 <div class="contact-area bg-gray-2">
   <div class="custom-container">
     <div class="row">

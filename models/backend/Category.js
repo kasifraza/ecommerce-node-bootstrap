@@ -20,7 +20,11 @@ const categorySchema = new mongoose.Schema({
     },
     image:{
         type:String,
-    }
+    },
+    products: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    }]
 });
 categorySchema.plugin(URLSlugs('title'));
 module.exports = mongoose.model('Category',categorySchema);
