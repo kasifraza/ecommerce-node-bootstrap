@@ -1,11 +1,13 @@
 const Product = require('../../models/backend/Product');
 const Category = require('../../models/backend/Category');
+const Brand = require('../../models/backend/Brand');
 module.exports = {
 
     // Shop page 
     index: async (req, resp, next) => {
         var perPage = 10;
         var page = req.query.page || 1;
+        var brandId = req.query.brand || '';
         let query = Product.find()
             .populate('category')
             .skip((perPage * page) - perPage)
@@ -15,6 +17,12 @@ module.exports = {
         }
         if (req.query.filter) {
             query = query.where(req.query.filter);
+        }
+        if(req.query.brand){
+            query = query.where({brand: brandId});
+        }
+        if(req.query.hot){
+            query = query.where({mark:'HOT'});
         }
         query.exec(async (err, products) => {
             Product.count().exec(async (err, count) => {

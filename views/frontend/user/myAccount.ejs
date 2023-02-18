@@ -1,0 +1,278 @@
+<style>
+    body {
+        background-color: #f7f7f7;
+    }
+
+    .container {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .nav-tabs {
+        border-bottom: none;
+    }
+
+    .nav-tabs .nav-item .nav-link {
+        border: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        color: #444;
+        font-weight: 600;
+        background-color: transparent;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .nav-tabs .nav-item .nav-link:hover,
+    .nav-tabs .nav-item .nav-link:focus {
+        border-bottom: none;
+        background-color: #fff;
+        color: #000;
+    }
+
+    .nav-tabs .nav-item .nav-link.active {
+        background-color: #fff;
+        color: #000;
+        border: none;
+    }
+
+    .tab-content {
+        background-color: #fff;
+        padding: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .card {
+        margin-bottom: 30px;
+        border-radius: 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-title {
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+    .card-text {
+        color: #555;
+    }
+
+    .btn-primary {
+        background-color: #0047ab;
+        border-color: #0047ab;
+        font-weight: 600;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #00317a;
+        border-color: #00317a;
+    }
+
+    .btn-primary:not(:disabled):not(.disabled):active,
+    .btn-primary:not(:disabled):not(.disabled).active {
+        background-color: #002050;
+        border-color: #002050;
+    }
+
+    .btn-primary:not(:disabled):not(.disabled):active:focus,
+    .btn-primary:not(:disabled):not(.disabled).active:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 39, 122, 0.5);
+    }
+    .error{
+        color:red !important
+    }
+</style>
+<div class="container">
+    <h1 class="text-center my-5">My Account</h1>
+    <hr>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs justify-content-center mb-4" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                aria-controls="profile" aria-selected="true">My Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="update-tab" data-toggle="tab" href="#update" role="tab" aria-controls="update"
+                aria-selected="false">Update Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab" aria-controls="address"
+                aria-selected="false">Address Book</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="create-address-tab" data-toggle="tab" href="#createaddress" role="tab" aria-controls="createaddress"
+                aria-selected="false">Add Address</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders"
+                aria-selected="false">My Orders</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">My Profile</h5>
+                            <p class="card-text">Name: <%= user.name %></p>
+                            <p class="card-text">Email: <%= user.email %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="update" role="tabpanel" aria-labelledby="update-tab">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Update Profile</h5>
+                            <form id="update-user-profile">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input name="name" value="<%= user.name %>" type="text" class="form-control" id="name" placeholder="Enter your name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email address</label>
+                                    <input name="email" value="<%= user.email %>" type="email" class="form-control" id="email" placeholder="Enter email">
+                                </div>
+                                <br/>
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="createaddress" role="tabpanel" aria-labelledby="create-address-tab">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Add Address</h5>
+                            <form action="" id="my-account-create-address-form">
+                                <div class="form-group">
+                                    <label for="firstname">First Name</label>
+                                    <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Enter your First Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastname">Last Name</label>
+                                    <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Enter Your Last Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="street">Street</label>
+                                    <input name="street" type="text" class="form-control" id="street" placeholder="Enter Street">
+                                </div>
+                                <div class="form-group">
+                                    <label for="apartment">Apartment</label>
+                                    <input name="apartment" type="text" class="form-control" id="apartment" placeholder="Enter Apartment">
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input name="city" type="text" class="form-control" id="city" placeholder="Enter City">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <input name="state" type="text" class="form-control" id="state" placeholder="Enter State">
+                                </div>
+                                <div class="form-group">
+                                    <label for="zip">Zip</label>
+                                    <input name="zip" type="text" class="form-control" id="zip" placeholder="Enter ZIP Code">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input name="phone" type="tel" class="form-control" id="phone" placeholder="Enter Phone Number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input name="email" type="email" class="form-control" id="email" placeholder="Enter Email ">
+                                </div>
+                                <div class="form-group">
+                                    <label for="notes">Notes (optional)</label>
+                                    <input name="notes" type="text" class="form-control" id="notes" placeholder="Enter Notes ">
+                                </div>
+                                <br/>
+                                <button type="submit" class="btn btn-primary">Create Address</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Address Book</h5>
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    <% if(typeof addresses != 'undefined' && addresses.length > 0){ %>
+                                        <% addresses.forEach(address => { %>
+                                         
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <p class="card-text">Name: <%= address.firstname %> <%= address.lastname %></p>
+                                                    <h5 class="card-title"><%= address.street %> <%= address.apartment %></h5>
+                                                    <p class="card-text"><%= address.city %>  <%= address.state %> <%= address.zip %></p>
+                                                    <p class="card-text">Phone: <%= address.phone %></p>
+                                                    <p class="card-text">Email: <%= address.email %></p>
+                                                    <a href="/user/update-address/<%= address._id %>" class="btn btn-sm btn-primary">Edit</a>
+                                                </div>
+                                            </div>
+
+                                        <% }) %>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mb-3">Add New Address</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">My Orders</h5>
+                            <% if(typeof orders != 'undefined' && orders.length > 0 ){ %>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Order ID</th>
+                                            <th>Date</th>
+                                            <th>View Invoice</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% orders.forEach((order,index) => { %>
+                                            <tr>
+                                                <td><%= index+1 %></td>
+                                                <td><%= order._id %></td>
+                                                <td><%= order.createdAt  %></td>
+                                                <td> 
+                                                    <a target="_blank" href="/user/invoice/<%= order.invoice %>">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a> 
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            <% }else{ %>
+                              <h1>No Orders Found </h1>  
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,9 @@
 const User = require("../../models/backend/User");
 const Address = require('../../models/backend/Address')
+const Order = require('../../models/backend/Order')
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 function generateOrderId() { 
     // 16 bytes = 128 bits 
     return crypto.randomBytes(16).toString("hex"); 
@@ -151,6 +154,67 @@ module.exports = {
         } catch (error) {
             errorstatus = error.status || 500;
             return resp.status(errorstatus).json({ status: false, message: error.message || 'Internal Server Error' });
+        }
+    },
+    // Update User Address Render GET
+    updateAddress :(req,resp,next) => {
+        try{
+            const addressId = req.params.id;
+            Address.findById(addressId, (err, address) => {
+                if(err){
+                    req.session.message = {
+                        type : 'error',
+                        message : 'Address Not Found'
+                    };
+                    return resp.redirect('/user/my-account');
+                }
+                return resp.render('./frontend/user/update-address', { title: 'Update Address', address: address });
+            });
+        }catch(error){
+            next(error);
+        }
+    },
+
+    // See Invoice using invoice id
+    invoice:(req,res,next) => {
+        try {
+            const invoiceId = req.params.id;
+            Order.find({user : req.session.user._id,invoice : invoiceId}, (err, order) => {
+                if(err){
+                    req.session.message = {
+                        type : 'error',
+                        message : 'Invoice Not Found'
+                    };
+                    return res.redirect('/user/my-account');
+                }
+                const invoicePath = path.join(__dirname, `../../helpers/pdf/${invoiceId}`);
+                fs.readFile(invoicePath, (err, data) => {
+                    if (err) {
+                        req.session.message = {
+                            type : 'error',
+                            message : 'Invoice Not Found'
+                        };
+                        return res.redirect('/user/my-account');
+                    }
+                    const invoiceStream = fs.createReadStream(invoicePath);
+                    res.setHeader('Content-Type', 'application/pdf');
+                    res.setHeader('Content-Disposition', `inline; filename=${invoiceId}`);
+                    invoiceStream.pipe(res);   
+                });
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+    myAccount:async(req,resp,next) => {
+        try {            
+            const userId = req.userData._id;
+            const user = req.session.user;
+            const addresses = await Address.find({ user: userId });
+            const orders = await Order.find({ user: userId });
+            return resp.render('./frontend/user/myAccount', { title: 'My Account', user: user,addresses:addresses,orders:orders });
+        } catch (error) {
+            next(error);
         }
     }
 }

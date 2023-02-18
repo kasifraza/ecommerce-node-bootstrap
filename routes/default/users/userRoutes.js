@@ -10,6 +10,7 @@ const Product = require('../../../models/backend/Product');
 const Cart = require('../../../models/backend/Cart');
 const isUser = require('../../../middlewares/isUser');
 const checkIsLoggedIn = require('../../../middlewares/isLoggedout');  // used for logout
+const isLoggedIn = require('../../../middlewares/isLoggedin');
 const notLoggedin = async(req,resp,next) => {
   const token = req.cookies.token;
   if(token){
@@ -17,11 +18,7 @@ const notLoggedin = async(req,resp,next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await User.findById(decoded.user.id);
       if(user){
-        req.session.user = {
-          id : user._id,
-          name : user.name,
-          email : user.email
-        };
+        req.session.user = user;
         if(req.cookies.cart){
           let cart = req.cookies.cart;
           if(cart.length > 0){
@@ -56,10 +53,6 @@ const notLoggedin = async(req,resp,next) => {
           };
           return resp.redirect('/');
         } else {
-          req.session.message = {
-            type: 'warning',
-            message : `Hey ${user.name}, you are already logged in.`
-          };
           return resp.redirect('/');
         }
       } else {
@@ -103,5 +96,19 @@ router.route('/activate/:id')
 // Create User Address Post    //Get is in cart controller (hitting this post from checkout page)
 router.route('/create-address')
   .post(isUser,usercontroller.createAddress)
+
+router.route('/update-address/:id')
+      .get(isUser,usercontroller.updateAddress)
+  
+
+
+//  My ACcount Page
+
+router.route('/my-account')
+      .get(isLoggedIn,usercontroller.myAccount)
+
+router.route('/invoice/:id')
+    .get(isLoggedIn,usercontroller.invoice)
+      
 
 module.exports = router;

@@ -104,7 +104,7 @@ module.exports = {
                     id: user.id,
                 },
             };
-            const activationLink = `http://localhost:3000/user/activate/${user._id}`;
+            const activationLink = `http://localhost:8000/user/activate/${user._id}`;
             const html = await renderTemplate({ activationLink });
             jwt.sign(
                 payload,
@@ -113,8 +113,8 @@ module.exports = {
                 async (err, token) => {
                     if (err) throw err;
                     resp.cookie('token', token, {
-                        httpOnly: true,
-                        sameSite: true,
+                        // httpOnly: true,
+                        // sameSite: true,
                         maxAge: 60 * 60 * 24 * 14, // 2 week
                     });
                     transporter.sendMail({
@@ -133,13 +133,16 @@ module.exports = {
 
     },
     login: async (req, resp) => {
-        const { email, password, userdetail } = req.body;
+        const { email, password } = req.body;
 
         try {
             let user = await User.findOne({ email });
 
             if (!user) {
                 return resp.status(400).json({ status: false, message: "Invalid Email" });
+            }
+            if(user.role!= 'user'){
+                return resp.status(400).json({ status: false, message: "You are not authorized to access this page" });
             }
             if (user.status != true) {
                 return resp.status(403).json({ status: false, message: "Activate Your Account First Through link sent on Email" });
@@ -164,20 +167,15 @@ module.exports = {
                 async (err, token) => {
                     if (err) throw err;
                     resp.cookie('token', token, {
-                        httpOnly: true,
-                        sameSite: true,
-                        maxAge: 30 * 86400000 //30 days
+                        maxAge: 30 * 86400000 
                     });
                     for (let i = 0; i < cart.length; i++) {
                         const product = await Product.findById(cart[i].productId);
                         if (product && product.stock) {
-                            // if product exists then push item to cart schema
                             const subTotal = product.price * cart[i].quantity;
                             const cartSave = new Cart({ user: user._id, productId: product._id, quantity: cart[i].quantity, subTotal: subTotal });
                             cartSave.save();
-                            // and delete from cart cookie
                             cart.splice(cart[i], 1);
-                            // resp.cookie('cart', cart);
                         }
                         else {
                             cart.splice(i, 1);
@@ -186,6 +184,7 @@ module.exports = {
                         resp.cookie('cart', cart);
                     }
                     req.session.user = user;
+                    req.userData = user;
                     resp.json({ status: true, message: 'Logged In Successfully', token });
                 }
             );
@@ -194,16 +193,29 @@ module.exports = {
         }
     },
 
+    // Update User Profile PUT Method
+    updateProfile : async(req,resp,next)=>{
+        try{
+            const user = req.userData;
+            const {email,name} =req.body;
+            const updateUser = await User.findByIdAndUpdate(user._id,{email,name});
+            if(!updateUser){
+                return resp.status(404).json({status:false,message:'User not found'});
+            }
+            return resp.status(200).json({status:true,message:'Profile Updated Successfully'});
+        }catch(err){
+            return resp.status(500).json({status:false,message:'Internal Server Error'});
+        }
+    },
 
     // Create user Address
     userAddress: async (req, resp) => {
         try {
-
             const { email, firstname, lastname, street, apartment, city, state, zip, phone, notes, } = req.body;
             const user = req.userData._id;
-            var type = 'billing';
+            var type = 'shipping';
             if (req.body.type) {
-                type = 'shipping';
+                type = 'billing';
             }
             const createAddress = new Address({
                 user: user,
@@ -231,14 +243,16 @@ module.exports = {
             return resp.status(errorstatus).json({ status: false, message: error.message || 'Internal Server Error' });
         }
     },
+    // Update user Address PUT Method
+
 
 
     // update user a particular address
     updateUserAddress: async (req, resp) => {
         try {
-            // if (!req.params.id) {
-            //     return resp.status(400).json({ status: false, message: 'Missing Address ID' });
-            // }
+            if (!req.params.id) {
+                return resp.status(400).json({ status: false, message: 'Missing Address ID' });
+            }
             const user = req.userData._id;
             const addressId = req.params.id;
             const { email, firstname, lastname, street, apartment, city, state, zip, phone, notes, } = req.body;

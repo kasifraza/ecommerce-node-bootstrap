@@ -12,7 +12,7 @@ const isApiUser = async (req, resp, next) => {
             }
             else {
                 const user = await User.findById(decoded.user.id);
-                if (user) {
+                if (user && user.role === 'user') {
                     req.session.user = user;
                     req.userData = user;
                     return next();

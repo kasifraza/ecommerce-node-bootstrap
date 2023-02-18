@@ -3,7 +3,7 @@ const addressSchema = new mongoose.Schema({
     user : {
         required : true,
         type: mongoose.Schema.Types.ObjectId, ref: 'User'
-    },
+    }, 
     type : {
         required : true,
         type : String
@@ -49,12 +49,12 @@ const addressSchema = new mongoose.Schema({
         type : String
     },
     checkoutid : {
-        required : true,
+        required : false,
         type : String
     },
     checkoutstatus : {
-        required : true,
-        enum : ['pending','success','failed'],
+        required : false,
+        // enum : ['pending','success','failed'],
         default : 'pending',
         type : String
     }
