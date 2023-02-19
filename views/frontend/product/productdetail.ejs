@@ -307,51 +307,35 @@
 <% } %> 
 <% if(product.stock == true){ %> 
 <script>
-    // add to cart function using hidden inputs like product detail page
 const addToCartButton = document.getElementById('add-to-cart-detail');
 addToCartButton.addEventListener('click', () => {
-  const productId = document.getElementById('prid').value;
-  const quantity = document.getElementById('qty').value;
-  const cartItem = {
-    id: productId,
-    quantity: quantity
-  };
-  const data = new FormData();
-  data.append('productId', productId);
-  data.append('quantity', quantity);
-  fetch('/cart/add-to-cart-detail', {
-    method: 'POST',
-    body: data
-  })
-    .then(response => {
-      if (!response.ok) {
-        toastr.error('Internal Server Error');
-      }
-      // return response.json();
-    })
-    .then(data => {
-      let cart = JSON.parse(localStorage.getItem("cart")) || {};
-
-      if (cart[productId]) {
-        // If the product is already in the cart, update its quantity
-        cart[productId].quantity = parseFloat(quantity) +parseFloat(cart[productId].quantity);
-        toastr.success('Product Quantity Updated!');
-        // toastr.success(cart[productId].quantity)
-      } else {
-        // If the product is not in the cart, add it
-        cart[productId] = cartItem;
-        toastr.success('Product Added to Cart!');
-      }
-
-      localStorage.setItem("cart", JSON.stringify(cart));
-      setTimeout(function () {
-        //redirect to cart page
-        window.location.href = '/cart';
-      }, 1500);
-    })
-    .catch(error => {
-      toastr.error(error);
-    });
+    const productId = document.getElementById('prid').value;
+    const quantity = document.getElementById('qty').value;
+    
+    const data = new FormData();
+    data.append('productId', productId);
+    data.append('quantity', quantity);
+    
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/cart/add-to-cart-detail');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            console.log(response);
+            toastr.success(response.message);
+        } else {
+            const errormessage = JSON.parse(xhr.responseText);
+            toastr.error(errormessage.message);
+        }
+    };
+    xhr.onerror = function() {
+        const errormessage = JSON.parse(xhr.responseText);
+        toastr.error(errormessage.message);
+        
+    };
+    xhr.send(new URLSearchParams(data));
 });
+
 </script>
 <% } %> 

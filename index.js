@@ -22,6 +22,7 @@ const userRoutes = require('./routes/default/users/userRoutes');
 const cartRoutes = require('./routes/default/product/cartRoutes');
 const testimonialRoutes = require('./routes/admin/testimonialRoutes');
 const apiRoutes = require('./routes/api/apiRoutes');
+const apiv1Routes = require('./routes/api/v1/apiv1Routes');
 const errorHandler = require('./middlewares/errorHandler');
 const { isAdmin } = require('./middlewares/isAdmin');
 
@@ -107,6 +108,9 @@ app.use('/cart', cartRoutes);
 
 // Frontend API
 app.use('/api', apiRoutes);
+
+// All Api
+app.use('/api/v1',apiv1Routes);
 
 // CMS 
 app.use('/admin', adminRoutes);

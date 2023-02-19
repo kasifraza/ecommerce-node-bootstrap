@@ -144,24 +144,46 @@ module.exports = {
     } catch (error) {
       return resp.json({ status: false, message: error.message });
     }
-  },
+  }, 
 
 
 
-  addToCartDetail: (req, resp, next) => {
-    const productId = req.body.productId;
-    const quantity = req.body.quantity;
-    Product.findOne({
-      id: productId
-    }, (err, product) => {
-      if (err) {
-        return resp.status(500).send();
+  addToCartDetail: async (req, resp) => {
+    try {
+      const { productId, quantity } = req.body;
+
+      if (typeof productId === 'undefined' || typeof quantity === 'undefined') {
+        return resp.status(400).json({ status: false, message: 'Product Id and Quantity is Required' });
       }
+      let cart = req.cookies.cart || [];
+      const product = await Product.findOne({ _id: productId });
       if (!product) {
-        return resp.status(404).send();
+        return resp.status(400).json({ status: false, message: 'Product Not Found' });
       }
-      return resp.status(200).send();
-    });
+      let existingProduct = cart.find(product => product.productId == productId);
+      if (existingProduct) {
+        const oldqty = existingProduct.quantity;
+        const newqty = parseInt(oldqty) + parseInt(quantity);
+        if (newqty >= 10) {
+          return resp.status(400).json({ status: false, message: 'You have already added 10 Products  in cart' });
+        }
+        existingProduct.quantity = newqty;
+      } else {
+        const qty = parseInt(quantity);
+        if (qty >= 10) {
+          return resp.status(400).json({ status: false, message: 'You have already added 10 Products  in cart' });
+        }
+        cart.push({ productId, qty });
+      }
+      // Set the updated cart data in a cookie
+      resp.cookie('cart', cart, {
+        maxAge: 60 * 60 * 24 * 365
+      });
+      return resp.status(200).json({ status: true, message: 'Product Added to cart' });
+    } catch (error) {
+      return resp.status(500).json({ status: false, message: error.message });
+    }
+
   },
 
 
