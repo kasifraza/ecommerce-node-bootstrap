@@ -28,7 +28,8 @@ async function getProductDetails(cart) {
   for (let i = 0; i < cart.length; i++) {
     const product = await Product.findOne({ _id: cart[i].productId });
     if (product) {
-      productDetails.push([product, cart[i].quantity]);
+      const qty = cart[i].quantity;
+      productDetails.push([product, parseInt(qty)]);
     } else {
       cart.splice(i, 1);
     }

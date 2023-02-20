@@ -30,8 +30,10 @@ module.exports = {
       for (let i = 0; i < cart.length; i++) { // Check if the product ID matches a product in the database
         const product = await Product.findOne({ _id: cart[i].productId });
         if (product) { // If a match is found, add the product details to the array
+          const qty = cart[i].quantity;
+
           productDetails.push([
-            product, cart[i].quantity
+            product, parseInt(qty)
           ]);
         } else { // If no match is found, remove the product ID from the cart cookie
           cart.splice(i, 1);
@@ -161,19 +163,22 @@ module.exports = {
         return resp.status(400).json({ status: false, message: 'Product Not Found' });
       }
       let existingProduct = cart.find(product => product.productId == productId);
+      // return null; 
       if (existingProduct) {
         const oldqty = existingProduct.quantity;
         const newqty = parseInt(oldqty) + parseInt(quantity);
+        // const newqty = oldqty + quantity;
         if (newqty >= 10) {
           return resp.status(400).json({ status: false, message: 'You have already added 10 Products  in cart' });
         }
-        existingProduct.quantity = newqty;
+        existingProduct.quantity = newqty.toString();
       } else {
-        const qty = parseInt(quantity);
+        const qty = quantity;
+        // const qty = quantity;
         if (qty >= 10) {
           return resp.status(400).json({ status: false, message: 'You have already added 10 Products  in cart' });
         }
-        cart.push({ productId, qty });
+        cart.push({ productId, quantity : qty.toString() });
       }
       // Set the updated cart data in a cookie
       resp.cookie('cart', cart, {
@@ -198,8 +203,10 @@ module.exports = {
         }
         let index = cart.findIndex(product => product.productId === productId);
         if (index !== -1) {
-          if (cart[index].quantity < 10) {
-            cart[index].quantity += 1;
+          const old = cart[index].quantity;
+          if (parseInt(old) < 10) {
+            const newQuantity = parseInt(old) + 1;
+            cart[index].quantity = newQuantity.toString();
           } else {
             throw new Error('Maximum 10 Products is Allowed')
           }
@@ -259,10 +266,11 @@ module.exports = {
         }
         let index = cart.findIndex(product => product.productId === productId);
         if (index !== -1) {
-          if (cart[index].quantity <= 1) {
+          const oldqty = cart[index].quantity;
+          if (parseInt(oldqty) <= 1) {
             throw new Error('Minimum 1 Product is Required');
           }
-          cart[index].quantity -= 1;
+          cart[index].quantity = parseInt(oldqty) - 1;
         } else {
           throw new Error('Product is not exist in cart');
         }
