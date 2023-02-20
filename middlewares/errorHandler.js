@@ -12,6 +12,7 @@ function errorHandler(err, req, res,next) {
     }else{
         if (err.status === 404) {
             // req.app.set('layout', false);
+            req.app.set('layout', './layouts/layout');
             return res.render('./partials/frontend/404', {
                 message: err.message,
                 error: err,
