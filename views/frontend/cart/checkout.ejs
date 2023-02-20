@@ -24,19 +24,23 @@
                         <div class="customer-zone padding-20-row-col mb-10">
                             <p class="cart-page-title"><b>Select Delivery Address</b> <a class="checkout-click1" href="#">Click here to See</a></p>
                             <div class="checkout-login-info" style="display: block;">
-                                <% addressess.forEach(address => { %>
-                                 
-                                    <div class="card m-2">
-                                        <div class="card-body">
-                                            <input  type="radio" name="oldaddress" id="address-<%= address._id %> " value="<%= address._id %>">
-                                            <span>
-                                                <p><%= address.firstname %>  <%= address.lastname %> </p>
-                                                <p><%= address.street %> ,  <%= address.apartment %> , <%= address.city %> , <%= address.state %> , <%= address.zip %> , <%= address.email %>  , <%= address.phone  %> </p>
-                                            </span>
+                                <% if(addressess.length > 0){ %>
+                                    <% addressess.forEach(address => { %>
+                                    
+                                        <div class="card m-2">
+                                            <div class="card-body">
+                                                <input  type="radio" name="oldaddress" id="address-<%= address._id %> " value="<%= address._id %>">
+                                                <span>
+                                                    <p><%= address.firstname %>  <%= address.lastname %> </p>
+                                                    <p><%= address.street %> ,  <%= address.apartment %> , <%= address.city %> , <%= address.state %> , <%= address.zip %> , <%= address.email %>  , <%= address.phone  %> </p>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                <% }) %>
+                                    <% }) %>
+                                <% }else{ %>
+                                    <h1>We Did't find any saved address please create first</h1>
+                                    <a href="/user/my-account#createaddress" >Create Address</a>
                             </div>
                         </div>
                     <% } %> 
