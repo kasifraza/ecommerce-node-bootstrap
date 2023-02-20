@@ -125,6 +125,9 @@ app.use('/user', userRoutes);
 
 //  error page
 app.use(errorHandler);
+app.use('*', (req, resp) => {
+  resp.status(404).render('./partials/frontend/404',{title:'Not Found'});
+});
 
 
 app.listen(8000, () => {
