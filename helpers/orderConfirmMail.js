@@ -80,7 +80,7 @@ const sendMail = (order) => {
             secure: false,
             auth: {
                 user: "kasifraza910@gmail.com",
-                pass: "zqrlemfsekhoqqys",
+                pass: "wlxlsciteqhseniz",
             },
         });
 

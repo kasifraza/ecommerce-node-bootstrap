@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
     secure: false,
     auth: {
         user: "kasifraza910@gmail.com",
-        pass: "zqrlemfsekhoqqys",
+        pass: "wlxlsciteqhseniz",
     },
 });
 const renderTemplate = (data) => {
