@@ -104,7 +104,7 @@ module.exports = {
                     id: user.id,
                 },
             };
-            const activationLink = `http://localhost:8000/user/activate/${user._id}`;
+            const activationLink = `${process.env.URL}user/activate/${user._id}`;
             const html = await renderTemplate({ activationLink });
             jwt.sign(
                 payload,
@@ -113,7 +113,7 @@ module.exports = {
                 async (err, token) => {
                     if (err) throw err;
                     transporter.sendMail({
-                        from: "kasif.raza@indicsoft.com",
+                        from: "kasifraza910@gmail.com",
                         to: email,
                         subject: "Activate your account",
                         html,
