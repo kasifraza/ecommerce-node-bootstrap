@@ -88,6 +88,9 @@ router.route('/cart/add-to-cart')
 router.route('/cart/increment')
     .put(isAuthenticated,isCart,cartcontroller.incrementQuantity)
 
+router.route('/cart/decrement')
+    .put(isAuthenticated,isCart,cartcontroller.decrementQuantity)
+
 
         
 

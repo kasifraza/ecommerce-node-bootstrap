@@ -126,6 +126,38 @@ module.exports = {
     }catch(err){
       return res.status(500).json({ message: 'An error occurred while incrementing quantity.' });
     }
+  },
+
+  decrementQuantity : async (req, res) => {
+    try{
+      const { user,cart } = req;
+      if (!user ||!cart) {
+        return res.status(422).json({ message: 'You may did not login or cart not found' });
+      }
+      if(cart.quantity <= 1){
+        cart.quantity = 1;
+        cart.subTotal = cart.quantity * cart.productId.price;
+        await cart.save();
+        return res.status(422).json({message : "Minimum 1 Quanity is Required"})
+      }
+      cart.quantity -= 1;
+      cart.subTotal = cart.quantity * cart.productId.price;
+      const savedCart = await cart.save();
+      if (!savedCart) {
+        return res.status(500).json({ message: 'An error occurred while decrementing quantity.' });
+      }
+      return res.status(200).json({
+        cart: savedCart,
+        message: 'Qunatity decremented successfully',
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email
+        }
+      });
+    }catch(err){
+      return res.status(500).json({ message: 'An error occurred while decrementing quantity.' });
+    }
   }
       
 }
