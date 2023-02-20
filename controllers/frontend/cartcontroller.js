@@ -175,7 +175,7 @@ module.exports = {
       } else {
         const qty = quantity;
         // const qty = quantity;
-        if (qty >= 10) {
+        if (parseInt(qty) >= 10) {
           return resp.status(400).json({ status: false, message: 'You have already added 10 Products  in cart' });
         }
         cart.push({ productId, quantity : qty.toString() });
