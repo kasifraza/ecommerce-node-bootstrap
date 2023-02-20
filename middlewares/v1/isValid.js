@@ -123,5 +123,24 @@ module.exports = {
         } catch (err) {
           return res.status(500).json({ message: 'An error occurred while checking cart.' });
         }
+    },
+
+    isCart : async (req, res, next) => {
+        try {
+            const { user } = req;
+            if (!user) {
+                return res.status(422).json({ message: 'Without Login You can not Perform this action' });
+            }
+            const { cartId } = req.body;
+            Cart.findById(cartId).populate('productId').then(cart => {
+                req.cart = cart;
+                next();
+
+            }).catch(err => {
+                return res.status(404).json({message: 'Cart not found'});
+            });
+        }catch(err){
+            return res.status(500).json({message: 'Error in getting cart'});
+        }
     }
 }

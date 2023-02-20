@@ -1,6 +1,6 @@
 const express = require('express');
 const { loginValidate, registerValidate, createAddressValidate } = require('../../../helpers/v1/userValidation');
-const { isAddress, isCategory, isProductInStock, isItemExistInCart, isProductInStockByPost } = require('../../../middlewares/v1/isValid');
+const { isAddress, isCategory, isProductInStock, isItemExistInCart, isProductInStockByPost, isCart } = require('../../../middlewares/v1/isValid');
 const router = express.Router();
 isAuthenticated = require('../../../middlewares/v1/isAuthenticated');
 usercontroller = require('../../../controllers/v1/usercontroller');
@@ -83,6 +83,10 @@ router.route('/cart/add-to-cart/:id')
 
 router.route('/cart/add-to-cart')
 .post(isAuthenticated,isProductInStockByPost,isItemExistInCart,cartcontroller.addToCartWithQuantity);
+
+
+router.route('/cart/increment')
+    .put(isAuthenticated,isCart,cartcontroller.incrementQuantity)
 
 
         

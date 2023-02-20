@@ -100,6 +100,32 @@ module.exports = {
     } catch (err) {
       return res.status(500).json({ message: 'An error occurred while getting cart.' });
     }
+  },
+
+  incrementQuantity : async (req, res) => {
+    try{
+      const { user,cart } = req;
+      if (!user ||!cart) {
+        return res.status(422).json({ message: 'You may did not login or cart not found' });
+      }
+      cart.quantity += 1;
+      cart.subTotal = cart.quantity * cart.productId.price;
+      const savedCart = await cart.save();
+      if (!savedCart) {
+        return res.status(500).json({ message: 'An error occurred while incrementing quantity.' });
+      }
+      return res.status(200).json({
+        cart: savedCart,
+        message: 'Qunatity incremented successfully',
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email
+        }
+      });
+    }catch(err){
+      return res.status(500).json({ message: 'An error occurred while incrementing quantity.' });
+    }
   }
       
 }
