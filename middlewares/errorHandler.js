@@ -10,13 +10,13 @@ function errorHandler(err, req, res,next) {
             currentUrl
         });
     }else{
-        // if(err.status === 404) {
-        //     req.app.set('layout', false);
-        //     res.render('./partials/frontend/404', {
-        //         message: err.message,
-        //         error: err,
-
-        //     });
+        if (err.status === 404) {
+            // req.app.set('layout', false);
+            return res.render('./partials/frontend/404', {
+                message: err.message,
+                error: err,
+            });
+        }
         // }else{
             req.app.set('layout', './layouts/layout');
             res.render('./partials/frontend/error', {
