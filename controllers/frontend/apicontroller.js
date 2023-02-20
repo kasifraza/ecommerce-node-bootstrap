@@ -112,11 +112,6 @@ module.exports = {
                 { expiresIn: 360000 },
                 async (err, token) => {
                     if (err) throw err;
-                    // resp.cookie('token', token, {
-                    //     // httpOnly: true,
-                    //     // sameSite: true,
-                    //     maxAge: 60 * 60 * 24 * 14, // 2 week
-                    // });
                     transporter.sendMail({
                         from: "kasif.raza@indicsoft.com",
                         to: email,
