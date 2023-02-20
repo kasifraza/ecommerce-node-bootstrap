@@ -23,12 +23,12 @@
                     <% if(typeof addressess != 'undefined' ){ %> 
                         <div class="customer-zone padding-20-row-col mb-10">
                             <p class="cart-page-title"><b>Select Delivery Address</b> <a class="checkout-click1" href="#">Click here to See</a></p>
-                            <div class="checkout-login-info">
+                            <div class="checkout-login-info" style="display: block;">
                                 <% addressess.forEach(address => { %>
                                  
                                     <div class="card m-2">
                                         <div class="card-body">
-                                            <input required type="radio" name="oldaddress" id="address-<%= address._id %> " value="<%= address._id %>">
+                                            <input  type="radio" name="oldaddress" id="address-<%= address._id %> " value="<%= address._id %>">
                                             <span>
                                                 <p><%= address.firstname %>  <%= address.lastname %> </p>
                                                 <p><%= address.street %> ,  <%= address.apartment %> , <%= address.city %> , <%= address.state %> , <%= address.zip %> , <%= address.email %>  , <%= address.phone  %> </p>
@@ -43,53 +43,6 @@
                     <div class="payment-details-area">
                         <h4>Payment information</h4>
                         <div class="payment-method">
-                            <div class="sin-payment payment-selected mb-20">
-                                <input id="payment_method_1" class="input-radio" type="radio" value="bank"
-                                    checked="checked" name="payment_method">
-                                <label for="payment_method_1">
-                                    <span>
-                                        <img class="nomal-img" src="/images/icon-img/direct-bank.png" alt="">
-                                        <img class="active-img" src="/images/icon-img/direct-bank-active.png" alt="">
-                                    </span>
-                                    Direct bank transfer
-                                </label>
-                                <div class="payment-box payment_method_bacs">
-                                    <p>Make your payment directly into our bank account. Please use your Order ID as the
-                                        payment reference. Your order will not be shipped until the funds have cleared in
-                                        our account.</p>
-                                </div>
-                            </div>
-                            <div class="sin-payment mb-20">
-                                <input id="payment-method-2" class="input-radio" type="radio" value="cheque"
-                                    name="payment_method">
-                                <label for="payment-method-2">
-                                    <span>
-                                        <img class="nomal-img" src="/images/icon-img/check-payments.png" alt="">
-                                        <img class="active-img" src="/images/icon-img/check-payments-active.png"
-                                            alt="">
-                                    </span>
-                                    Check payments
-                                </label>
-                                <div class="payment-box payment_method_bacs">
-                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
-                                        Store Postcode.</p>
-                                </div>
-                            </div>
-                            <div class="sin-payment mb-20">
-                                <input id="payment-method-3" class="input-radio" type="radio" value="cod"
-                                    name="payment_method">
-                                <label for="payment-method-3">
-                                    <span>
-                                        <img class="nomal-img" src="/images/icon-img/cash-on-delivery.png" alt="">
-                                        <img class="active-img" src="/images/icon-img/cash-on-delivery-active.png"
-                                            alt="">
-                                    </span>
-                                    Cash on delivery
-                                </label>
-                                <div class="payment-box payment_method_bacs">
-                                    <p>Pay with cash upon delivery.</p>
-                                </div>
-                            </div>
                             <div class="sin-payment">
                                 <input id="payment-method-4" class="input-radio" type="radio" value="paypal"
                                     name="payment_method">

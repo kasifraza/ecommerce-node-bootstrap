@@ -559,6 +559,7 @@ module.exports = {
             .limit(1)
             .populate('products.product')
             .populate('address')
+            .populate('user')
             .exec(async (err, order) => {
               if (err) {
                 req.session.message = {

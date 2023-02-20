@@ -12,12 +12,12 @@ const moment = require('moment');
 const _ = require('lodash');
 require('dotenv').config();
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     secure: false,
     auth: {
-        user: "kasifraza910@gmail.com",
-        pass: "wlxlsciteqhseniz",
+        user: process.env.MAIL_EMAIL,
+        pass: process.env.MAIL_PASSWORD,
     },
 });
 const renderTemplate = (data) => {
@@ -105,6 +105,7 @@ module.exports = {
                 },
             };
             const activationLink = `${process.env.URL}user/activate/${user._id}`;
+            console.log(activationLink);
             const html = await renderTemplate({ activationLink });
             jwt.sign(
                 payload,
@@ -113,7 +114,7 @@ module.exports = {
                 async (err, token) => {
                     if (err) throw err;
                     transporter.sendMail({
-                        from: "kasifraza910@gmail.com",
+                        from: process.env.MAIL_EMAIL,
                         to: email,
                         subject: "Activate your account",
                         html,

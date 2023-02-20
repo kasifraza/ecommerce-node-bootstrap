@@ -3,6 +3,7 @@ const ejs = require('ejs');
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
 const path = require('path');
+require('dotenv').config();
 const sendMail = (order) => {
     try {
 
@@ -75,12 +76,12 @@ const sendMail = (order) => {
 
         // Set up Nodemailer transporter
         const transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
+            host: process.env.MAIL_HOST,
+            port: process.env.MAIL_PORT,
             secure: false,
             auth: {
-                user: "kasifraza910@gmail.com",
-                pass: "wlxlsciteqhseniz",
+                user: process.env.MAIL_EMAIL,
+                pass: process.env.MAIL_PASSWORD,
             },
         });
 
@@ -90,8 +91,8 @@ const sendMail = (order) => {
                 console.log('Error rendering mailer template:', err);
             } else {
                 const mailOptions = {
-                    from: 'kasifraza910@gmail.com',
-                    to: 'kasifrazamecw@gmail.com',
+                    from: process.env.MAIL_EMAIL,
+                    to: order.user.email,
                     subject: 'Order Confirmation',
                     html: html,
                     attachments: [{
