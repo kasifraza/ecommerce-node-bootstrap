@@ -7,6 +7,7 @@ const Address = require('../../models/backend/Address');
 const paypal = require('paypal-rest-sdk');
 const Transactions = require('../../models/backend/Transactions');
 const Order = require('../../models/backend/Order');
+const WishList = require('../../models/backend/Wishlist');
 const sendMail = require('../../helpers/orderConfirmMail');
 require('dotenv').config();
 paypal.configure({
@@ -95,27 +96,44 @@ module.exports = {
   },
 
 
-  wishList: async (req, resp, next) => { // Get the wishlist cookie
-    const wishlist = req.cookies.wishlist;
-    // Initialize an empty array to store the product details
-    let productDetails = [];
-
-    // If the wishlist cookie is not empty
-    if (wishlist) {
-      for (let i = 0; i < wishlist.length; i++) { // Check if the product ID matches a product in the database
-        const product = await Product.findOne({ _id: wishlist[i].productId });
-        if (product) { // If a match is found, add the product details to the array
-          productDetails.push([product]);
-        } else { // If no match is found, remove the product ID from the wishlist cookie
-          wishlist.splice(i, 1);
-          // Update the wishlist cookie
-          resp.cookie('wishlist', wishlist);
+  wishList:  (req, res) => {
+    const wishlistCookie = req.cookies.wishlist;
+    if(req.session.user){
+      const user = req.session.user;
+      if(wishlistCookie && wishlistCookie.length > 0){
+        for(let i = 0; i < wishlistCookie.length; i++){
+          Product.findOne({ _id: wishlistCookie[i] }, (err, product) => {
+            if(err){
+              wishlistCookie.splice(i, 1);
+              i--;
+            }
+            const existWishlist = WishList.findOne({ user: user._id, products: product._id });
+            if(!existWishlist){
+              const wishlist = new WishList({
+                user: user._id,
+                products: product._id
+              });
+              wishlist.save();
+              wishlistCookie.splice(i, 1);
+              i--;
+            }else{
+              wishlistCookie.splice(i, 1);
+              i--;
+            }
+          });
         }
+        res.cookie('wishlist', wishlistCookie);
       }
-      resp.render('./frontend/cart/wishList', {
-        title: 'WishList',
-        productDetails
-      });
+     return res.render('./frontend/cart/wishList', {
+      title : 'Wishlist',
+     })
+    }else{
+      if(wishlistCookie && wishlistCookie.length > 0){
+        
+        return res.render('./frontend/cart/wishList', {
+          title : 'Wishlist',
+        });
+      }
     }
   },
 
@@ -123,30 +141,28 @@ module.exports = {
 
   addToWishList: async (req, resp) => {
     try {
-
-      let { productId } = req.body;
-      if (!productId) {
-        throw new Error('Something went wrong');
-      }
-      let wishlist = req.cookies.wishlist || [];
-
-      let existingProduct = wishlist.find(product => product.productId == productId);
-      if (existingProduct) {
-        throw new Error('Product already added to wishlist')
-      } else {
-        wishlist.push({ productId });
-      }
-
-      // Set the updated cart data in a cookie
-      resp.cookie('wishlist', wishlist, {
-        maxAge: 60 * 60 * 24 * 365
+      const { productId } = req.body;
+      const wishlist = req.cookies.wishlist || [];
+      Product.findById(productId, async (err, product) => {
+        if (err) {
+          return resp.json({ statusCode: 400, message: 'Unable to Add to wishlist' });
+        }
+        const existingProduct = wishlist.includes(productId);
+        if (existingProduct) {
+          return resp.json({ statusCode: 409, message: 'Product already Added to wishlist' });
+        }
+        const addToWishlist = wishlist.push(product._id);
+        resp.cookie('wishlist', wishlist);
+        if (addToWishlist) {
+          return resp.json({ statusCode: 200, message: 'Product Added to wishlist' });
+        } else {
+          return resp.status(500).json({ statusCode: 500, message: 'Unable to Add to wishlist' });
+        }
       });
-      // Send the updated cart data to the client
-      return resp.json({ status: true, message: 'Product Added to wishlish !' });
     } catch (error) {
-      return resp.json({ status: false, message: error.message });
+      return resp.status(500).json({ status: false, message: 'Internal Server Error' });
     }
-  }, 
+  },
 
 
 
@@ -178,7 +194,7 @@ module.exports = {
         if (parseInt(qty) >= 10) {
           return resp.status(400).json({ status: false, message: 'You have already added 10 Products  in cart' });
         }
-        cart.push({ productId, quantity : qty.toString() });
+        cart.push({ productId, quantity: qty.toString() });
       }
       // Set the updated cart data in a cookie
       resp.cookie('cart', cart, {
@@ -572,12 +588,12 @@ module.exports = {
               order.status = 'Success';
               order.payer = payment.payer;
               order.transactions = payment.transactions;
-              order.invoice = order._id+'-invoice.pdf';
+              order.invoice = order._id + '-invoice.pdf';
               await order.save();
               await Cart.deleteMany({
                 user: userId
               });
-               sendMail(order);
+              sendMail(order);
               // console.log(order.products)
 
 

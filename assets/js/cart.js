@@ -43,19 +43,16 @@ function addToWishList(id) {
   })
     .then(res => res.json())
     .then(response => {
-      if (!response.status) {
-        throw new Error(response.message);
-      }
-      else {
-        toastr.success('Product Added to wishlist!');
-        setTimeout(function () {
-          //redirect to cart page
-          window.location.href = '/cart/wishlist';
-        }, 1500);
+      if (response.statusCode === 400 || response.statusCode === 500) {
+        toastr.error(response.message);
+      } else if (response.statusCode === 200) {
+        toastr.success(response.message);
+      } else if (response.statusCode === 409) {
+        toastr.warning(response.message);
       }
     })
     .catch(error => {
-      toastr.error(error);
+      toastr.error(error.message);
     });
 }
 
@@ -278,62 +275,4 @@ $(document).ready(function() {
   });
 });
 
-// // wishlist adding function
-// function addToWishList(id) {
-//   const productId = id;
-//   //create cart item
-//   const cartItem = {
-//     id: productId,
-//   };
-//   // Get the existing cart from the local storage
-//   let cart = JSON.parse(localStorage.getItem("wishlist")) || {};
-//   // Check if the product is already in the cart
-//   if (cart[productId]) {
-//     // If the product is already in the cart, update its quantity
-//     cart[productId].id = productId;
-//     toastr.warning('Product Already added to wishlist!');
-//   } else {
-//     // If the product is not in the cart, add it
-//     cart[productId] = cartItem;
-//     toastr.success('Product Added to WishList!');
-//   }
-//   // Store the updated cart in the local storage
-//   localStorage.setItem("wishlist", JSON.stringify(cart));
-//   setTimeout(function () {
-//     //redirect to cart page
-//     window.location.href = '/cart/wishList';
-//   }, 1500);
-// }
-
-
-
-// // add to cart function
-// function addToCart(id) {
-//   // Get the product details
-//   const productId = id;
-//   //create cart item
-//   const cartItem = {
-//     id: productId,
-//     quantity: 1
-//   };
-//   // Get the existing cart from the local storage
-//   let cart = JSON.parse(localStorage.getItem("cart")) || {};
-//   // Check if the product is already in the cart
-//   if (cart[productId]) {
-//     // If the product is already in the cart, update its quantity
-//     cart[productId].quantity++;
-//     toastr.success('Product Quantity Updated!');
-//   } else {
-//     // If the product is not in the cart, add it
-//     cart[productId] = cartItem;
-//     toastr.success('Product Added to Cart!');
-//   }
-//   // Store the updated cart in the local storage
-//   localStorage.setItem("cart", JSON.stringify(cart));
-//   setTimeout(function () {
-//     //redirect to cart page
-//     window.location.href = '/cart';
-//   }, 1500);
-
-// }
 
