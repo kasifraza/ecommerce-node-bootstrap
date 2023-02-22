@@ -13,11 +13,14 @@ router.route('/')
     .get(deafultcontroller.index);
 router.route('/test')
 .get((req,resp) => {
-    req.app.set('layout', false);
-    // req.app.set('categoryModel',Category);
-    const catModel = req.app.get('categoryModel');
-    const text = catModel.findById('63ce53f28edf203a7979770a')
-    return resp.json(text)
+    if(req.session.user){
+        return resp.render('./frontend/default/chat',{title : "Test"});
+    }
+    req.session.message = {
+        type : "error",
+        message : "Please Login to See Chats"
+    };
+    return resp.redirect('/user/login');
 });
     // About Page
 router.route('/about-us')

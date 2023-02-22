@@ -60,6 +60,15 @@ const productSchema = new mongoose.Schema({
         default:false,
         enum : ['HOT','SALE']
 
+    },
+    seo_title :{
+        type:String,
+    },
+    seo_description : {
+        type:String,
+    },
+    seo_keywords:{
+        type:String,
     }
 });
 productSchema.plugin(URLSlugs('title'));

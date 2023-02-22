@@ -1,9 +1,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> <%= title  %> </title>
+    <title> <%= (typeof title != 'undefined' && title != '') ? title : 'Buy Medical Equipment Online in India - High-Quality Nebulizers, Masks, Sanitizers & More'  %> </title>
     <meta name="robots" content="noindex, follow" />
-    <meta name="description" content="Add_Description_Text">
+    <meta name="description" content="<%= (typeof seo_description != 'undefined') ? seo_description : ' Buy high-quality medical equipment online in India from our ecommerce website. We offer a range of medical supplies including nebulizers, masks, sanitizers, and more. Our products are designed to provide maximum protection against illnesses and infections. Shop now and stay healthy!'  %>">
+    <meta name="keywords" content="<%= (typeof seo_keywords != 'undefined') ? seo_keywords : ' buy medical equipment online, India, nebulizers, masks, sanitizers, medical supplies , medical equipment online store , healthcare products , respiratory equipment , medical supplies online , online pharmacy , medical devices online , health and wellness products , medical equipment suppliers , medical equipment manufacturers , healthcare supplies'  %>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Add site Favicon -->
     <link rel="icon" href="/images/favicon/cropped-favicon-32x32.png" sizes="32x32" />
