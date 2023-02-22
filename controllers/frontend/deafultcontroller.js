@@ -59,7 +59,7 @@ module.exports = {
             const dealsProducts = await getCachedProductData();
             
 
-            resp.render('./frontend/default/index', { title: 'EC',brands,testimonials, banners: banners, dealsProducts: dealsProducts ,ctas,shopByCategories,hotItems});
+            resp.render('./frontend/default/index', {brands,testimonials, banners: banners, dealsProducts: dealsProducts ,ctas,shopByCategories,hotItems});
         } catch (error) {
             next(error);   
         }
