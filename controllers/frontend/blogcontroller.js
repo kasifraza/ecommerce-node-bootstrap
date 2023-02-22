@@ -13,26 +13,7 @@ module.exports = {
         let slug = req.params.slug;
         Blogs.findOne({ slug: slug })
             .then((blog) => {
-                const previousBlogPromise = Blogs.findOne({
-                    $or: [
-                        { _id: { $lt: blog._id } },
-                        { date: { $lt: blog.created_on } }
-                    ]
-                })
-                    .sort({ date: 'desc' })
-                    .exec();
-                const nextBlogPromise = Blogs.findOne({
-                    $or: [
-                        { _id: { $gt: blog._id } },
-                        { date: { $gt: blog.created_on } }
-                    ]
-                })
-                    .sort({ date: 'asc' })
-                    .exec();
-                Promise.all([previousBlogPromise, nextBlogPromise])
-                    .then(([previousBlog, nextBlog]) => {
-                        resp.render('./frontend/blog/view', { blog, title: blog.seo_title ,previousBlog, nextBlog});
-                    })
+                resp.render('./frontend/blog/view', { blog, title: blog.seo_title });
             })
             .catch((err) => {
                 next(err);

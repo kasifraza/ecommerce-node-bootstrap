@@ -61,30 +61,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="blog-prev-next-wrap">
-                        <div class="row">
-                            <% if(typeof previousBlog != 'undefined') { %>
-                                <div class="col-lg-6 col-md-6 col-12 col-sm-6">
-                                    <div class="blog-prev-next-style blog-prev-position">
-                                        <a href="/blog/<%= previousBlog.slug  %>">
-                                            <img src="<%= `/uploads/${previousBlog.image}` %>" alt="">
-                                            <h4><%=  previousBlog.title %></h4>
-                                        </a>
-                                    </div>
-                                </div>
-                            <% } %>
-                            <% if(typeof nextBlog != 'undefined'){ %>
-                                <div class="col-lg-6 col-md-6 col-12 col-sm-6">
-                                    <div class="blog-prev-next-style blog-next-position">
-                                        <a href="/blog/<%= nextBlog.slug %>">
-                                            <img src="<%= `/uploads/${nextBlog.image}` %>" alt="">
-                                            <h4><%= nextBlog.title  %></h4>
-                                        </a>
-                                    </div>
-                                </div>
-                            <% } %>
-                        </div>
-                    </div>
                     <div class="blog-reply-wrapper">
                         <h3>Leave your thought here </h3>
                         <p>Your email address will not be published. Required fields are marked </p>
