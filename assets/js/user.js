@@ -165,4 +165,66 @@ $(document).ready(function () { // Initialize the form validation using jQuery V
 
 
 
+// Blog View Page Comment API
+// Update User Profile
+$(document).ready(function () { // Initialize the form validation using jQuery Validate
+  $("#comment-form").validate({
+    rules: {
+      name: {
+        required: true,
+        minlength: 2
+      },
+      blogId: {
+        required: true,
+      },
+      email: {
+        required: true,
+        email: true,
+      },
+      comment: {
+        required: true,
+        minlength : 5,
+        maxlength : 500
+      }
+
+    },
+    messages: {
+      name: {
+        required: "Name is required",
+        minlength: " Name must be at least 2 characters"
+
+      },
+      email: {
+        required: 'Email is Required',
+        email: "Please enter a valid email address"
+      },
+      comment: {
+        required: 'Comment is Required',
+        minlength : 'Comment must be at least 5 characters',
+        maxlength : 'Comment must be at most 255 characters  long'
+      },
+      blogId : {
+        required : 'Blog Id is Required',
+      }
+    },
+    submitHandler: function (form) {
+      event.preventDefault();
+      $.ajax({
+        url: "/blog/comment",
+        type: "POST",
+        data: $(form).serialize(),
+        success: function (response) {
+          toastr.success(response.message);
+          form.reset();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          
+          toastr.error(JSON.parse(jqXHR.responseText).message);
+        }
+      });
+    }
+  }
+  );
+});
+
   

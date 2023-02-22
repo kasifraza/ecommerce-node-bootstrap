@@ -1,10 +1,119 @@
-<!-- Post Content-->
-<article class="mb-4">
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-              <%- blog.description  %> 
+<style>
+    .error{
+        color: red;
+    }
+</style>
+<div class="breadcrumb-area breadcrumb-area-padding-2 bg-gray-2">
+    <div class="custom-container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/blogs">Blogs</a>
+                </li>
+                <li class="active"><%= blog.title  %></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="blog-details-area padding-30-row-col pt-75 pb-75">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 ml-auto mr-auto">
+                <div class="blog-details-wrapper">
+                    <div class="blog-details-top-content">
+                        <h1><%= blog.title  %></h1>
+                        <div class="blog-meta-3">
+                            <ul>
+                                <li><a href="#"><img src="https://randomuser.me/api/portraits/lego/5.jpg" alt=""> Kasif Raza</a>
+                                </li>
+                                <li><i class="far fa-calendar"></i> <%= new Date(blog.createdAt).toLocaleDateString() %></li>
+                                <li><i class="far fa-eye"></i> <%= Math.floor(Math.random() * (1000 - 200 + 1) + 200)  %> views</li>
+                                <li><a href="#"><i class="far fa-comment-alt-lines"></i> <%= Math.floor(Math.random() * (100 - 5 + 1) + 5)  %> comments</a> </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <img src="<%= `/uploads/${blog.image}`  %>" alt="">
+                    <%- blog.description  %>
+                    <div class="blog-tag-share-wrap">
+                        <div class="blog-tag-wrap">
+                            <span class="tag-icon fal fa-tags"></span>
+                            <div class="blog-tag">
+                                <a href="#">analytics, </a>
+                                <a href="#">hospital</a>
+                            </div>
+                        </div>
+                        <div class="blog-share-wrap">
+                            <div class="blog-share-content">
+                                <span> Share this post</span>
+                            </div>
+                            <div class="blog-share-icon">
+                                <span class="fas fa-share-alt"></span>
+                                <div class="blog-share-list tooltip-style-4 bs-list-responsive">
+                                    <a aria-label="Facebook" href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a aria-label="Twitter" href="#"><i class="fab fa-twitter"></i></a>
+                                    <a aria-label="Linkedin" href="#"><i class="fab fa-linkedin"></i></a>
+                                    <a aria-label="Tumblr" href="#"><i class="fab fa-tumblr-square"></i></a>
+                                    <a aria-label="Envelope" href="#"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="blog-prev-next-wrap">
+                        <div class="row">
+                            <% if(typeof previousBlog != 'undefined') { %>
+                                <div class="col-lg-6 col-md-6 col-12 col-sm-6">
+                                    <div class="blog-prev-next-style blog-prev-position">
+                                        <a href="/blog/<%= previousBlog.slug  %>">
+                                            <img src="<%= `/uploads/${previousBlog.image}` %>" alt="">
+                                            <h4><%=  previousBlog.title %></h4>
+                                        </a>
+                                    </div>
+                                </div>
+                            <% } %>
+                            <% if(typeof nextBlog != 'undefined'){ %>
+                                <div class="col-lg-6 col-md-6 col-12 col-sm-6">
+                                    <div class="blog-prev-next-style blog-next-position">
+                                        <a href="/blog/<%= nextBlog.slug %>">
+                                            <img src="<%= `/uploads/${nextBlog.image}` %>" alt="">
+                                            <h4><%= nextBlog.title  %></h4>
+                                        </a>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="blog-reply-wrapper">
+                        <h3>Leave your thought here </h3>
+                        <p>Your email address will not be published. Required fields are marked </p>
+                        <form id="comment-form">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="input-style blog-input-style">
+                                        <input type="text" placeholder="Your Name *" name="name" id="name">
+                                        <input type="hidden"  name="blogId" id="blogId" value="<%= blog._id %>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="input-style blog-input-style">
+                                        <input type="email" placeholder="Your Email *" name="email" id="email">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="textarea-style blog-textarea-style">
+                                        <textarea placeholder="Your Comment" name="comment" id="comment"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="blog-comment-submit">
+                                <input type="submit" value="Submit" name="submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</article>
+</div>

@@ -27,13 +27,17 @@ router.route('/about-us')
     .get(deafultcontroller.about);
 
     // single blog view
-router.route('/blog/:id')
+router.route('/blog/:slug')
     .get(blogcontroller.view);
 
 
     // All blogs 
 router.route('/blogs')
     .get(blogcontroller.index);
+
+    // Add Comment on Blog POST
+router.route('/blog/comment')
+    .post(blogcontroller.addComment);
 
 
     // Contact-US Page

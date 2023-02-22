@@ -68,4 +68,5 @@ const blogImgResize=async(req,res,next)=>{
     next();
 }
 
+
 module.exports={uploadPhoto,productImgResize,blogImgResize,singleProductImgResize}

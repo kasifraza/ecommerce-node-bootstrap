@@ -1,26 +1,142 @@
-<div class="container">
-    <div class="row mb-4">
-        <% if (blogs && blogs != []) { %>
-            <% blogs.forEach(blog => { %>
-                <div class="col-md-4 mt-4">
-                    <div class="card rounded">
-                        <a href="/blog/<%= blog._id  %> ">
-                            <div class="card-body">
-                                <img src="./uploads/<%= blog.image  %> " class="col-md-12 rounded card-img-top" style="object-fit: fill; filter: brightness(50%); max-height: fit-content;" />
-                                <h5 class="card-title mt-1"><%= blog.title  %> </h5>
-                                <p class="">
-                                    <%- blog.description.substring(0,80) + '...'  %> 
-                                </p>
-                                <p> <%= new Date(blog.created_on).toLocaleDateString('en-US', { year:
-                                    'numeric' , month: 'long' , day: 'numeric' }) %>
-                                </p>
-                            </div> 
-                        </a>
+<div class="breadcrumb-area breadcrumb-area-padding-2 bg-gray-2">
+    <div class="custom-container">
+        <div class="breadcrumb-content text-center">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li class="active">Blogs</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="blog-area pt-75 pb-75">
+    <div class="container">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-8">
+                <% if(typeof blogs != 'undefined' && blogs.length > 0) { %>
+                    <div class="row grid">
+                        <% blogs.forEach((blog) => { %>
+                            <div class="col-lg-6 col-md-6 col-12 col-sm-6 grid-item wow tmFadeInUp">
+                                <div class="blog-wrap-2 mb-30">
+                                    <div class="blog-img-2">
+                                        <a href="/blog/<%= blog.slug %>"><img src="/uploads/<%= blog.image %>" alt=""></a>
+                                        <div class="blog-tag-2">
+                                            <a href="/blog/<%= blog.slug %>">Hot News</a>
+                                        </div>
+                                    </div>
+                                    <div class="blog-content-2">
+                                        <div class="blog-meta-2">
+                                            <ul>
+                                                <li><i class="far fa-calendar"></i><%= (blog.createdAt != 'undefined') ? new Date(blog.createdAt).toLocaleDateString() : ''  %></li>
+                                                <li><i class="far fa-eye"></i> <%= Math.floor(Math.random() * (1000 - 200 + 1) + 200)  %> views</li>
+                                            </ul>
+                                        </div>
+                                        <h3><a href="/blog/<%= blog.slug %>"><%= blog.title  %></a></h3>
+                                        <div class="blog-btn">
+                                            <a href="/blog/<%= blog.slug %>">Read more <i class="far fa-long-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% }else{ %>
+                    <h1>No Blogs Posted</h1>
+                <% } %>
+            </div>
+            <div class="col-lg-4">
+                <div class="sidebar-wrapper sidebar-wrapper-mr1">
+                    <div class="sidebar-widget sidebar-widget-wrap sidebar-widget-padding-2 mb-20">
+                        <h4 class="sidebar-widget-title">Popular posts </h4>
+                        <div class="sidebar-post-wrap mt-30">
+                            <div class="single-sidebar-post">
+                                <div class="sidebar-post-img">
+                                    <a href="blog-details.html"><img src="/images/blog/sidebar-blog-1.jpg"
+                                            alt=""></a>
+                                </div>
+                                <div class="sidebar-post-content">
+                                    <h4><a href="blog-details.html">Coronavirus latest: at a glance</a></h4>
+                                    <span>April 21, 2020</span>
+                                </div>
+                            </div>
+                            <div class="single-sidebar-post">
+                                <div class="sidebar-post-img">
+                                    <a href="blog-details.html"><img src="/images/blog/sidebar-blog-2.jpg"
+                                            alt=""></a>
+                                </div>
+                                <div class="sidebar-post-content">
+                                    <h4><a href="blog-details.html">Healthcare workers confronted anti-lockdown
+                                            protesters</a></h4>
+                                    <span>April 21, 2020</span>
+                                </div>
+                            </div>
+                            <div class="single-sidebar-post">
+                                <div class="sidebar-post-img">
+                                    <a href="blog-details.html"><img src="/images/blog/sidebar-blog-3.jpg"
+                                            alt=""></a>
+                                </div>
+                                <div class="sidebar-post-content">
+                                    <h4><a href="blog-details.html">Turning crap into gold</a></h4>
+                                    <span>April 21, 2020</span>
+                                </div>
+                            </div>
+                            <div class="single-sidebar-post">
+                                <div class="sidebar-post-img">
+                                    <a href="blog-details.html"><img src="/images/blog/sidebar-blog-5.jpg"
+                                            alt=""></a>
+                                </div>
+                                <div class="sidebar-post-content">
+                                    <h4><a href="blog-details.html">WHO warns that few have developed antibodies to
+                                            Covid-19</a></h4>
+                                    <span>April 21, 2020</span>
+                                </div>
+                            </div>
+                            <div class="single-sidebar-post">
+                                <div class="sidebar-post-img">
+                                    <a href="blog-details.html"><img src="/images/blog/sidebar-blog-4.jpg"
+                                            alt=""></a>
+                                </div>
+                                <div class="sidebar-post-content">
+                                    <h4><a href="blog-details.html">The stress of giving birth under lockdown</a></h4>
+                                    <span>April 21, 2020</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget sidebar-widget-wrap sidebar-widget-padding-6">
+                        <h4 class="sidebar-widget-title">Popular tags </h4>
+                        <div class="sidebar-tag">
+                            <ul>
+                                <li><a href="#">alzheimer</a></li>
+                                <li><a href="#">analytics</a></li>
+                                <li><a href="#">baby</a></li>
+                                <li><a href="#">corona virus</a></li>
+                                <li><a href="#">covid19</a></li>
+                                <li><a href="#">covid 19</a></li>
+                                <li><a href="#">daily</a></li>
+                                <li><a href="#">Daily Life</a></li>
+                                <li><a href="#">diet</a></li>
+                                <li><a href="#">elder</a></li>
+                                <li><a href="#">epedemic</a></li>
+                                <li><a href="#">happy life</a></li>
+                                <li><a href="#">health</a></li>
+                                <li><a href="#">healthy</a></li>
+                                <li><a href="#">hospital</a></li>
+                                <li><a href="#">hot news</a></li>
+                                <li><a href="#">life</a></li>
+                                <li><a href="#">mask</a></li>
+                                <li><a href="#">personal</a></li>
+                                <li><a href="#">quarantee</a></li>
+                                <li><a href="#">sickness</a></li>
+                                <li><a href="#">virus</a></li>
+                                <li><a href="#">women</a></li>
+                                <li><a href="#">workout</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            <% }) %>
-        <% }else{ %>
-            <h1> No Blogs Posted </h1>
-        <% } %> 
+            </div>
+        </div>
     </div>
 </div>

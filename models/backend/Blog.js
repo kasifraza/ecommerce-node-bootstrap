@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+var URLSlugs = require('mongoose-url-slugs');
 const blogSchema = new mongoose.Schema({
     title:{
         required:true,
@@ -22,7 +23,7 @@ const blogSchema = new mongoose.Schema({
     },
     seo_title:{
         type : String,
-    },
+    }, 
     seo_description:{
         type : String,
     },
@@ -30,4 +31,5 @@ const blogSchema = new mongoose.Schema({
         type : String,
     }
 },{timestamps:true});
+blogSchema.plugin(URLSlugs('title'));
 module.exports = mongoose.model('Blog',blogSchema);

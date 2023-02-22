@@ -103,6 +103,9 @@ module.exports = {
             description: req.body.description,
             status: req.body.status,
             image: req.file.filename,
+            seo_title: req.body.seo_title,
+            seo_description : req.body.seo_description,
+            seo_keywords : req.body.seo_keywords
         });
         blog.save((err) => {
             if (err) {
@@ -129,10 +132,13 @@ module.exports = {
                 .then((blog) => {
                     const oldImage = blog.image;
                     fs.unlinkSync('assets/uploads/' + oldImage);
-                    blog.title = req.body.title,
+                        blog.title = req.body.title,
                         blog.description = req.body.description,
                         blog.status = req.body.status,
-                        blog.image = req.file.filename;
+                        blog.image = req.file.filename,
+                        blog.seo_title = req.body.seo_title,
+                        blog.seo_description = req.body.seo_description,
+                        blog.seo_keywords = req.body.seo_keywords
                     return blog.save();
                 })
                 .then((result) => {
@@ -153,8 +159,11 @@ module.exports = {
         else {
             Blog.findById(id)
                 .then((blog) => {
-                    blog.title = req.body.title,
+                        blog.title = req.body.title,
                         blog.description = req.body.description,
+                        blog.seo_title = req.body.seo_title,
+                        blog.seo_description = req.body.seo_description,
+                        blog.seo_keywords = req.body.seo_keywords,
                         blog.status = req.body.status;
                     return blog.save();
                 })
