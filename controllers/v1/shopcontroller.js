@@ -72,5 +72,20 @@ module.exports = {
         } catch (err) {
             return res.status(500).json({ message: 'Error while getting category' });
         }
+    },
+    allProductImages : async (req,resp,next)=>{
+        try{
+            Product.find().exec(async (err,products)=>{
+                if(err){
+                    return resp.status(500).json({
+                        message : err.message || 'Error Occured while fetching all product images'
+                    });
+                }
+                return resp.status(200).json({images : products.images,message : 'Success'});
+
+            });
+        }catch(err){
+            return resp.status(500).json({message:err.message || 'Internal Server Error'});
+        }
     }
 }

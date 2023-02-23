@@ -24,6 +24,8 @@ router.route('/wishList')
 router.route('/add-to-cart')
     .post(cartcontroller.addTOCart);
 
+    
+
 // Add to Wishlist Action post
 router.route('/add-to-wishlist')
     .post(cartcontroller.addToWishList);

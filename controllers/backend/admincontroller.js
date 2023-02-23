@@ -107,12 +107,12 @@ module.exports = {
         const currentUrl = req.originalUrl;
         About.findById('63cba2289ad8ac17d1576026', (err, about) => {
             if (err) {
-                resp.redirect("/admin");
+                return resp.redirect("/admin");
             } else {
                 if (about == null) {
-                    resp.redirect("/admin");
+                    return resp.redirect("/admin");
                 } else {
-                    resp.render('./backend/default/about', { title: 'Update '+about.title, about: about ,currentUrl});
+                    return resp.render('./backend/default/about', { title: 'Update '+about.title, about: about ,currentUrl});
                 }
             }
         });

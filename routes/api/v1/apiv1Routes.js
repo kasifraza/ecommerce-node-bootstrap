@@ -66,6 +66,9 @@ router.route('/shop/categories')
 router.route('/shop/category/:id')
     .get(isCategory,shopcontroller.getSingleCategory);
 
+router.route('/shop/all-product-images')
+    .get(shopcontroller.allProductImages);
+
 
         
 /**

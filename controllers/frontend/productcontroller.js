@@ -99,5 +99,6 @@ module.exports = {
                 await resp.render('./frontend/product/productdetail.ejs', {product,relatedproducts:relatedproduct , title: product.title});
             } );
         });
-    }
+    },
+
 }
