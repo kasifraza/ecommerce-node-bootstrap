@@ -1,7 +1,6 @@
 const Product = require('../../models/backend/Product');
 const Category = require('../../models/backend/Category');
 const fs = require('fs');
-const request = require('request');
 module.exports = {
     getAllProducts: async (req, res) => {
         try {
