@@ -22,9 +22,7 @@ router.route('/wishList')
 
 // Add to Cart Action post
 router.route('/add-to-cart')
-    .post(cartcontroller.addTOCart);
-
-    
+    .post(cartcontroller.addTOCart);    
 
 // Add to Wishlist Action post
 router.route('/add-to-wishlist')

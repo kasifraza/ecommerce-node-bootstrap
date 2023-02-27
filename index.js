@@ -83,6 +83,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('uploads'));
+app.use('uploads/products',express.static(path.join(__dirname, './assets/uploads/products')))
 // app.use(express.static('uploads/products'));
 app.use(express.static(path.join(__dirname, 'assets')));
 // retrieve cart count

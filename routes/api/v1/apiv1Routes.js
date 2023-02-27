@@ -6,6 +6,7 @@ isAuthenticated = require('../../../middlewares/v1/isAuthenticated');
 usercontroller = require('../../../controllers/v1/usercontroller');
 shopcontroller = require('../../../controllers/v1/shopcontroller');
 cartcontroller = require('../../../controllers/v1/cartcontroller');
+blogcontroller = require('../../../controllers/v1/blogcontroller');
 router.all("/*", (req, resp, next) => {
     req.app.set('layout', false)
     next();
@@ -66,8 +67,6 @@ router.route('/shop/categories')
 router.route('/shop/category/:id')
     .get(isCategory,shopcontroller.getSingleCategory);
 
-router.route('/shop/all-product-images')
-    .get(shopcontroller.allProductImages);
 
 
         
@@ -94,6 +93,17 @@ router.route('/cart/increment')
 router.route('/cart/decrement')
     .put(isAuthenticated,isCart,cartcontroller.decrementQuantity)
 
+
+
+
+/**
+ *  Route : BLOGS
+ *  CONTROLLER : BLOG
+ *  CONTROLLER PATH : ROOT_DIR/controllers/frontend/v1/blogcontroller.js
+**/  
+
+router.route('/blogs')
+    .get(blogcontroller.index);
 
         
 
