@@ -25,7 +25,12 @@ module.exports = {
                 if(err){
                     return res.status(500).json({message : 'Error occurred while creating token'});
                 }
-                return res.status(200).json({token,message : 'Logged-In successfully'});
+                const persistedUser = {
+                    name : user.name,
+                    email : user.email,
+                    lastLoginTime : Date.now(),
+                }
+                return res.status(200).json({token,message : 'Logged-In successfully',persistedUser});
             });
         }catch(e){
             return res.status(500).json({message : 'Internal Server Error'});
